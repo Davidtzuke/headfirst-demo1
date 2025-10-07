@@ -5,7 +5,94 @@
 
 :root { color-scheme: dark; }
 html, body { height: 100%; overflow-x: hidden; }
-body { @apply bg-bg text-text font-mono; overflow-y: auto; }
+html { 
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem; /* Account for fixed header */
+}
+body { 
+  @apply bg-bg text-text font-mono; 
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  transition: transform 0.1s ease-out;
+}
+
+/* Hide scrollbar for WebKit browsers */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Enhanced smooth scrolling for all browsers */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Scroll animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Section scroll margins for anchor links */
+#home, #features, #contact {
+  scroll-margin-top: 6rem;
+}
+
+/* Enhanced button animations */
+.nav-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+  transition: width 0.3s ease, height 0.3s ease;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.nav-button:hover::after {
+  width: 200px;
+  height: 200px;
+}
+
+/* Smooth page transitions */
+.page-transition {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-transition:active {
+  transform: scale(0.98);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  .reveal,
+  .reveal.is-visible {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
 
 /* Light theme styles */
 .light {

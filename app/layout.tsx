@@ -1,10 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { SplashCursor } from "@/components/WavyBackground";
+import { SplashCursor } from "@/components/SplashCursor";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeToggle from "@/components/ThemeToggle";
 import { ActiveNav } from "@/components/ActiveNav";
+import { SmoothScrollLink } from "@/components/SmoothScrollLink";
 
 export const metadata: Metadata = {
   title: "Wish4It™ — Chat. Choose. Checkout.",
@@ -35,21 +36,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <ThemeProvider>
-          <SplashCursor 
-            DENSITY_DISSIPATION={1.2}
-            VELOCITY_DISSIPATION={0.8}
-            PRESSURE={0.8}
-            CURL={30}
-            SPLAT_RADIUS={0.25}
-            SPLAT_FORCE={6000}
-            SHADING={true}
-            COLOR_UPDATE_SPEED={10}
-          />
+          <SplashCursor />
           <div className="relative z-20">
             <div className="announce-bar">
               <div className="announce-inner">
                 <span className="text-xs sm:text-sm">Coming soon — Join waitlist for 1 month free.</span>
-                <a href="#contact" className="announce-link">Join now →</a>
+                <SmoothScrollLink href="#contact" className="announce-link">Join now →</SmoothScrollLink>
               </div>
             </div>
             <header className="fixed top-0 z-50 w-full border-b border-border/60 bg-black/40 backdrop-blur-md" style={{top: '1.3rem'}}>
@@ -74,9 +66,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </nav>
                 <div className="flex items-center gap-3">
                   <ThemeToggle />
-                  <a href="#contact" className="rounded-lg bg-white/10 px-4 py-2 text-sm hover:bg-white/20">
+                                    <SmoothScrollLink href="#contact" className="group relative rounded-lg bg-white/10 px-4 py-2 text-sm hover:bg-white/20 transition-all duration-300 transform hover:scale-105 active:scale-95 border border-white/20 hover:border-white/40 shadow-lg backdrop-blur-sm">
                     Join Waitlist
-                  </a>
+                  </SmoothScrollLink>
                 </div>
               </div>
             </header>
@@ -94,8 +86,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <span>© {new Date().getFullYear()} Wish4It™ — Built in the EU.</span>
                 </div>
                 <div className="flex gap-6">
-                  <a href="#features" className="hover:text-text">Features</a>
-                  <a href="#contact" className="hover:text-text">Contact</a>
+                  <SmoothScrollLink href="#features" className="hover:text-text">Features</SmoothScrollLink>
+                  <SmoothScrollLink href="#contact" className="hover:text-text">Contact</SmoothScrollLink>
                   <a href="#" className="hover:text-text">Privacy</a>
                 </div>
               </div>

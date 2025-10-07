@@ -2,10 +2,24 @@
 import { useState, useEffect } from "react";
 import { Box, Zap, Settings, ShoppingCart, Shield, MessageSquare } from "lucide-react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { SmoothScrollLink, useSmoothScrollOnLoad } from "@/components/SmoothScrollLink";
 import { cn } from "@/lib/utils";
 
 export default function HomePage() {
   const [open, setOpen] = useState(false);
+  
+  // Handle page initialization
+  useEffect(() => {
+    // Always start at the top when the page loads
+    // Users can manually navigate to sections using the navigation buttons
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+    window.scrollTo(0, 0);
+  }, []);
+  
+  // Enable smooth scrolling for navigation clicks
+  useSmoothScrollOnLoad();
 
   useEffect(() => {
     // Set up scroll reveal animations
@@ -26,40 +40,8 @@ export default function HomePage() {
     const revealElements = document.querySelectorAll('.reveal');
     revealElements.forEach(el => observer.observe(el));
 
-    // Enhanced smooth scrolling for anchor links
-    const handleAnchorClick = (e: Event) => {
-      const target = e.target as HTMLAnchorElement;
-      if (target.href && target.href.includes('#')) {
-        const targetId = target.href.split('#')[1];
-        const targetElement = document.getElementById(targetId);
-        
-        if (targetElement) {
-          e.preventDefault();
-          
-          // Add a subtle page shake effect
-          document.body.style.transform = 'scale(0.995)';
-          setTimeout(() => {
-            document.body.style.transform = 'scale(1)';
-          }, 100);
-          
-          // Smooth scroll with custom easing
-          targetElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
-          
-          // Update URL
-          history.replaceState(null, '', `#${targetId}`);
-        }
-      }
-    };
-
-    // Add click listeners to all anchor links
-    document.addEventListener('click', handleAnchorClick);
-
     return () => {
       observer.disconnect();
-      document.removeEventListener('click', handleAnchorClick);
     };
   }, []);
 
@@ -81,13 +63,13 @@ export default function HomePage() {
           </p>
           <p className="text-xs sm:text-sm text-muted mb-8 text-center">Plug and play shopping assistants for e-commerce</p>
           <div className="flex flex-col items-center justify-center gap-4">
-            <a 
+            <SmoothScrollLink
               href="#contact" 
-              className="group relative rounded-lg bg-white/10 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg hover:bg-white/20 transition-all duration-300 transform hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-white/10 overflow-hidden"
+              className="group relative rounded-lg bg-white/10 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg hover:bg-white/20 transition-all duration-300 transform hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-white/10 overflow-hidden inline-block text-center"
             >
               <span className="relative z-10">Join Waitlist</span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </a>
+            </SmoothScrollLink>
             <button 
               onClick={() => setOpen(true)} 
               className="group relative rounded-lg border border-border px-6 py-3 hover:bg-white/10 transition-all duration-300 transform hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-white/5 overflow-hidden"
@@ -96,13 +78,13 @@ export default function HomePage() {
               <span className="relative z-10">Watch Explanation</span>
               <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </button>
-            <a 
+            <SmoothScrollLink
               href="#features" 
-              className="group relative rounded-lg border border-border px-4 py-2 text-sm hover:bg-white/10 transition-all duration-300 transform hover:scale-105 active:scale-95 overflow-hidden"
+              className="group relative rounded-lg border border-border px-4 py-2 text-sm hover:bg-white/10 transition-all duration-300 transform hover:scale-105 active:scale-95 overflow-hidden inline-block"
             >
               <span className="relative z-10">See More</span>
               <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </a>
+            </SmoothScrollLink>
           </div>
         </div>
 

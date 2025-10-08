@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { Box, Zap, Settings, ShoppingCart, Shield, MessageSquare } from "lucide-react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { GooeyText } from "@/components/ui/gooey-text-morphing";
+import { SimpleGooeyText } from "@/components/ui/simple-gooey-text";
 import { SmoothScrollLink, useSmoothScrollOnLoad } from "@/components/SmoothScrollLink";
 import { cn } from "@/lib/utils";
 
@@ -58,6 +60,18 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto">
           <div className="mb-4 text-sm uppercase tracking-widest text-muted">Wish4It™</div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight mb-3 text-center">Chat.Choose.Checkout.</h1>
+          
+          {/* Gooey Text Morphing Animation - Use SimpleGooeyText for better performance */}
+          <div className="mb-6">
+            <SimpleGooeyText
+              texts={["Smart", "Fast", "Easy", "Seamless"]}
+              morphTime={1.0}
+              cooldownTime={1.5}
+              className="h-[80px] flex items-center justify-center"
+              textClassName="text-3xl sm:text-4xl md:text-5xl font-semibold text-blue-400"
+            />
+          </div>
+          
           <p className="mb-8 text-muted">
             Coming soon — join the waitlist before launch and get 1 month free.
           </p>

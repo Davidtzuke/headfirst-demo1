@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeToggle from "@/components/ThemeToggle";
 import { ActiveNav } from "@/components/ActiveNav";
 import { SmoothScrollLink } from "@/components/SmoothScrollLink";
+import { FoundersBanner } from "@/components/ui/founders-banner";
 
 export const metadata: Metadata = {
   title: "Wish4It™ — Chat. Choose. Checkout.",
@@ -74,21 +75,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </header>
             <main className="relative z-20 pt-20">{children}</main>
             <footer className="mt-24 border-t border-border/60 bg-black/40">
-              <div className="container py-10 text-sm text-muted flex flex-col md:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-2">
-                  <Image 
-                    src="/logo.png" 
-                    alt="" 
-                    width={24} 
-                    height={24} 
-                    className="h-6 w-6 opacity-80"
-                  />
-                  <span>© {new Date().getFullYear()} Wish4It™ — Built in the EU.</span>
-                </div>
-                <div className="flex gap-6">
-                  <SmoothScrollLink href="#features" className="hover:text-text">Features</SmoothScrollLink>
-                  <SmoothScrollLink href="#contact" className="hover:text-text">Contact</SmoothScrollLink>
-                  <a href="#" className="hover:text-text">Privacy</a>
+              <div className="container py-6">
+                <FoundersBanner className="mb-6" />
+                <div className="py-4 text-sm text-muted flex flex-col md:flex-row items-center justify-between gap-4 border-t border-border/40">
+                  <div className="flex items-center gap-2">
+                    <Image 
+                      src="/logo.png" 
+                      alt="" 
+                      width={24} 
+                      height={24} 
+                      className="h-6 w-6 opacity-80"
+                    />
+                    <span>© {new Date().getFullYear()} Wish4It™ — Built in the EU.</span>
+                  </div>
+                  <div className="flex gap-6">
+                    <SmoothScrollLink href="#features" className="hover:text-text">Features</SmoothScrollLink>
+                    <SmoothScrollLink href="#contact" className="hover:text-text">Contact</SmoothScrollLink>
+                    <a href="#" className="hover:text-text">Privacy</a>
+                  </div>
                 </div>
               </div>
             </footer>

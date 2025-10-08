@@ -103,9 +103,25 @@ const GlowingEffect = memo(
 
       const handleScroll = () => handleMove();
       const handlePointerMove = (e: PointerEvent) => handleMove(e);
+      
+      // Add mouseleave listener to text elements to re-enable effect
+      const handleMouseLeave = (e: MouseEvent) => {
+        const target = e.target as Element;
+        const isTextElement = target.matches('p, span, h1, h2, h3, h4, h5, h6, a, button, label, div[class*="text"], [class*="font"]');
+        
+        if (isTextElement && containerRef.current) {
+          // Small delay to check if mouse is still over text
+          setTimeout(() => {
+            handleMove();
+          }, 10);
+        }
+      };
 
       window.addEventListener("scroll", handleScroll, { passive: true });
       document.body.addEventListener("pointermove", handlePointerMove, {
+        passive: true,
+      });
+      document.body.addEventListener("mouseleave", handleMouseLeave, {
         passive: true,
       });
 
@@ -115,6 +131,7 @@ const GlowingEffect = memo(
         }
         window.removeEventListener("scroll", handleScroll);
         document.body.removeEventListener("pointermove", handlePointerMove);
+        document.body.removeEventListener("mouseleave", handleMouseLeave);
       };
     }, [handleMove, disabled]);
 

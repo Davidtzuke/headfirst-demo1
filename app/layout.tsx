@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { SplashCursor } from "@/components/SplashCursor";
+import { SplashCursor } from "@/components/ui/splash-cursor";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeToggle from "@/components/ThemeToggle";
 import { ActiveNav } from "@/components/ActiveNav";

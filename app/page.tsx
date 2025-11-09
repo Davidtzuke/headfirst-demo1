@@ -84,12 +84,12 @@ export default function HomePage() {
               <span className="relative z-10">Join Waitlist</span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </SmoothScrollLink>
-            <button 
-              onClick={() => setOpen(true)} 
+            <button
+              onClick={() => setOpen(true)}
               className="group relative rounded-lg border border-border px-6 py-3 hover:bg-white/10 transition-all duration-300 transform hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-white/5 overflow-hidden"
               type="button"
             >
-              <span className="relative z-10">Watch Explanation</span>
+              <span className="relative z-10">Watch Demo</span>
               <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </button>
             <SmoothScrollLink
@@ -109,7 +109,7 @@ export default function HomePage() {
           >
             <div className="w-full max-w-3xl rounded-lg border border-border bg-surface p-4">
               <div className="flex justify-between items-center mb-2">
-                <h4 className="font-semibold">Wish4It™ — Explanation</h4>
+                <h4 className="font-semibold">Wish4It™ — Demo</h4>
                 <button 
                   onClick={() => setOpen(false)} 
                   className="rounded-md bg-white/10 px-3 py-1 hover:bg-white/20 transition-colors"
@@ -119,11 +119,11 @@ export default function HomePage() {
                 </button>
               </div>
               <div className="aspect-video w-full bg-black rounded-md overflow-hidden">
-                <iframe 
-                  src="https://drive.google.com/file/d/1EPhhgDyKlhA2gSnUGWJ0mO5DVMjIy5VF/preview" 
+                <iframe
+                  src="https://drive.google.com/file/d/1flCBaPFVcQkNeRG7HqEV2Dy5NyIg39Tu/preview"
                   className="w-full h-full"
                   allow="autoplay"
-                  title="Wish4It Explanation Video"
+                  title="Wish4It Demo Video"
                 />
               </div>
             </div>

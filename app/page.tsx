@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Box, Zap, Settings, ShoppingCart, Shield, MessageSquare } from "lucide-react";
+import { Box, Zap, Settings, ShoppingCart, Shield, MessageSquare, Sparkles, Play } from "lucide-react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
 import { SimpleGooeyText } from "@/components/ui/simple-gooey-text";
@@ -64,7 +64,7 @@ export default function HomePage() {
           {/* Gooey Text Morphing Animation - Use SimpleGooeyText for better performance */}
           <div className="mb-6">
             <SimpleGooeyText
-              texts={["Smart", "Fast", "Easy", "Seamless"]}
+              texts={["Smart", "Fast", "Seamless", "Automatic"]}
               morphTime={1.0}
               cooldownTime={1.5}
               className="h-[80px] flex items-center justify-center"
@@ -73,27 +73,36 @@ export default function HomePage() {
           </div>
           
           <p className="mb-8 text-muted">
-            Coming soon — join the waitlist before launch and get 1 month free.
+            Join the private beta — get 1 month free at launch this December.
           </p>
-          <p className="text-xs sm:text-sm text-muted mb-8 text-center">Plug and play shopping assistants for e-commerce</p>
+          <p className="text-xs sm:text-sm text-muted-foreground mb-2 text-center">Plug-and-play AI shopping assistants for Shopify stores.</p>
+          <p className="text-sm text-muted-foreground mb-8 text-center">
+            Built for Shopify merchants tired of expensive chatbots.
+          </p>
           <div className="flex flex-col items-center justify-center gap-4">
             <SmoothScrollLink
-              href="#contact" 
+              href="#contact"
               className="group relative rounded-lg bg-white/10 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg hover:bg-white/20 transition-all duration-300 transform hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-white/10 overflow-hidden inline-block text-center"
             >
-              <span className="relative z-10">Join Waitlist</span>
+              <span className="relative z-10 flex items-center gap-2">
+                Join Waitlist
+                <Sparkles className="h-4 w-4" />
+              </span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </SmoothScrollLink>
             <button
               onClick={() => setOpen(true)}
-              className="group relative rounded-lg border border-border px-6 py-3 hover:bg-white/10 transition-all duration-300 transform hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-white/5 overflow-hidden"
+              className="group relative rounded-lg border-2 border-white/30 px-6 py-3 hover:bg-white/10 hover:border-white/50 transition-all duration-300 transform hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-white/10 overflow-hidden"
               type="button"
             >
-              <span className="relative z-10">Watch Demo</span>
+              <span className="relative z-10 flex items-center gap-2">
+                <Play className="h-4 w-4 fill-current" />
+                Watch Demo
+              </span>
               <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </button>
             <SmoothScrollLink
-              href="#features" 
+              href="#features"
               className="group relative rounded-lg border border-border px-4 py-2 text-sm hover:bg-white/10 transition-all duration-300 transform hover:scale-105 active:scale-95 overflow-hidden inline-block"
             >
               <span className="relative z-10">See More</span>
@@ -216,20 +225,29 @@ export default function HomePage() {
           >
             <div>
               <label className="text-sm text-muted">Your email:</label>
-              <input 
-                type="email" 
-                name="email" 
-                required 
-                className="mt-1 w-full rounded-md border border-border bg-black/30 px-3 py-2 outline-none focus:border-white/60" 
+              <input
+                type="email"
+                name="email"
+                required
+                className="mt-1 w-full rounded-md border border-border bg-black/30 px-3 py-2 outline-none focus:border-white/60"
+              />
+            </div>
+            <div>
+              <label className="text-sm text-muted">Your Shopify:</label>
+              <input
+                type="text"
+                name="shopify"
+                placeholder="yourstore.myshopify.com"
+                className="mt-1 w-full rounded-md border border-border bg-black/30 px-3 py-2 outline-none focus:border-white/60"
               />
             </div>
             <div>
               <label className="text-sm text-muted">Your message:</label>
-              <textarea 
-                name="message" 
+              <textarea
+                name="message"
                 rows={4}
                 placeholder="Tell us about your business or any questions..."
-                className="mt-1 w-full rounded-md border border-border bg-black/30 px-3 py-2 outline-none focus:border-white/60 resize-none" 
+                className="mt-1 w-full rounded-md border border-border bg-black/30 px-3 py-2 outline-none focus:border-white/60 resize-none"
               />
             </div>
             <button 

@@ -251,11 +251,11 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flex: 1,
-    marginTop: 250,
+    marginTop: 300,
   },
   scrollContentContainer: {
     paddingHorizontal: 20,
-    paddingTop: 10,
+    paddingTop: 20,
   },
   card: {
     backgroundColor: "rgba(255, 255, 255, 0.05)",

@@ -426,37 +426,35 @@ export default function ForumScreen() {
   // Forum Feed View
   if (view === "feed") {
     return (
-      <SafeAreaView style={styles.root}>
-        <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
-          <TouchableOpacity
-            style={styles.menuButton}
-            onPress={() => {
-              // @ts-ignore
-              navigation.openDrawer();
-            }}
-          >
-            <MaterialCommunityIcons name="menu" size={21} color="rgba(255, 255, 255, 0.92)" />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Community Forum</Text>
+      <View style={styles.rootFull}>
+        <View style={[styles.header]}>
           <View style={{ width: 28 }} />
         </View>
 
         {/* Top search + filter controls */}
         <View style={styles.searchFiltersBlock}>
-          <View style={styles.searchContainer}>
-            <MaterialCommunityIcons
-              name="magnify"
-              size={17}
-              color="rgba(255, 255, 255, 0.5)"
-              style={styles.searchIcon}
-            />
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Search discussions..."
-              placeholderTextColor="rgba(255, 255, 255, 0.35)"
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-            />
+          <View style={styles.searchRow}>
+            <View style={styles.searchContainer}>
+              <MaterialCommunityIcons
+                name="magnify"
+                size={17}
+                color="rgba(255, 255, 255, 0.5)"
+                style={styles.searchIcon}
+              />
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search discussions..."
+                placeholderTextColor="rgba(255, 255, 255, 0.35)"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.createButtonInline}
+              onPress={() => setView("create")}
+            >
+              <MaterialCommunityIcons name="plus" size={18} color="rgba(255, 255, 255, 0.92)" />
+            </TouchableOpacity>
           </View>
 
           {/* Tag Filters */}
@@ -470,7 +468,12 @@ export default function ForumScreen() {
         {/* Thread List */}
         <ScrollView
           style={styles.threadList}
-          contentContainerStyle={styles.threadListContent}
+          contentContainerStyle={[
+            styles.threadListContent,
+            {
+              paddingBottom: 76 + Math.max(insets.bottom, 20) + 20, // Tab bar height + extra padding
+            },
+          ]}
           showsVerticalScrollIndicator={false}
         >
           {filteredThreads.map((thread) => (
@@ -480,31 +483,22 @@ export default function ForumScreen() {
               onPress={() => handleThreadPress(thread)}
             />
           ))}
-          <View style={{ height: 100 }} />
         </ScrollView>
-
-        {/* Floating Create Button */}
-        <TouchableOpacity
-          style={styles.createButton}
-          onPress={() => setView("create")}
-        >
-          <MaterialCommunityIcons name="plus" size={22} color="#0A0A24" />
-        </TouchableOpacity>
-      </SafeAreaView>
+      </View>
     );
   }
 
   // Thread Detail View
   if (view === "thread" && selectedThread) {
     return (
-      <SafeAreaView style={styles.root}>
+      <View style={styles.rootFull}>
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
         >
           {/* Header */}
-          <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
+          <View style={styles.header}>
             <TouchableOpacity
               style={styles.menuButton}
               onPress={handleBackToFeed}
@@ -617,7 +611,7 @@ export default function ForumScreen() {
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
-      </SafeAreaView>
+      </View>
     );
   }
 
@@ -754,7 +748,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 12,
   },
+  searchRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
   searchContainer: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "rgba(255, 255, 255, 0.05)",
@@ -763,6 +763,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.08)",
     height: 46,
+  },
+  createButtonInline: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.08)",
+    height: 46,
+    width: 46,
   },
   searchIcon: {
     marginRight: 10,
@@ -910,27 +921,12 @@ const styles = StyleSheet.create({
     color: "rgba(255, 255, 255, 0.55)",
     fontWeight: "500",
   },
-  createButton: {
-    position: "absolute",
-    bottom: 26,
-    right: 22,
-    width: 54,
-    height: 54,
-    borderRadius: 27,
-    backgroundColor: "#FFFFFF",
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.28,
-    shadowRadius: 10,
-    elevation: 8,
-  },
   threadDetailScroll: {
     flex: 1,
   },
   threadDetailContent: {
     paddingHorizontal: 20,
+    paddingTop: 8,
   },
   threadDetailCard: {
     backgroundColor: "rgba(255, 255, 255, 0.03)",

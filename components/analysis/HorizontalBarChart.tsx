@@ -99,16 +99,18 @@ const styles = StyleSheet.create({
   barLabel: {
     width: 100,
     fontSize: 14,
-    color: Colors.text,
+    color: Colors.tint,
     fontWeight: "500",
   },
   barBackground: {
     flex: 1,
     height: 32,
-    backgroundColor: Colors.tabBarBackground,
+    backgroundColor: "#000112",
     borderRadius: 8,
     position: "relative",
     overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "rgba(255, 248, 220, 0.2)", // Colors.tint with 20% opacity
   },
   centerLine: {
     position: "absolute",
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
     width: 50,
     textAlign: "right",
     fontSize: 14,
-    color: Colors.text,
+    color: Colors.tint,
     fontWeight: "500",
   },
 });

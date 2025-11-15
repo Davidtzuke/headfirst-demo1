@@ -3,7 +3,7 @@ import HorizontalBarChart from "@/components/analysis/HorizontalBarChart";
 import { Colors } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "expo-router";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -30,6 +30,34 @@ export default function HomeScreen() {
           paddingVertical: 32,
         }}
       >
+        <View
+          style={{
+            gap: 8,
+            paddingBottom: 32,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 40,
+              color: "#fff",
+              fontWeight: 800,
+            }}
+          >
+            Analysis
+          </Text>
+
+          <Text
+            style={{
+              fontSize: 20,
+              color: Colors.tint,
+              fontWeight: 600,
+            }}
+          >
+            See which triggers, preceding symptoms, and symptoms are most
+            strongly associated with migraines.
+          </Text>
+        </View>
+
         <HorizontalBarChart
           title="Triggers"
           data={[

@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
   headerRightSpacer: {
     width: 28,
   },
-  menuButton: {},
   title: {
     fontSize: 32,
     color: Colors.tint,

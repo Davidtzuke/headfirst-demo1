@@ -39,11 +39,11 @@ export function FloatingTabBar() {
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
   const screenWidth = Dimensions.get("window").width;
-  const iconButtonWidth = 56; // Width of icon button container
+  const iconButtonWidth = 60; // Width of icon button container
   const gap = 10; // Gap between tab bar and icon button
   const tabBarWidth = screenWidth - 40 - iconButtonWidth - gap; // Account for padding, icon button, and gap
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
   const menuOpacity = useSharedValue(0);
   const menuScale = useSharedValue(0.8);
   const menuTranslateY = useSharedValue(10);
@@ -108,7 +108,7 @@ export function FloatingTabBar() {
   const toggleMenu = () => {
     const newState = !isMenuOpen;
     setIsMenuOpen(newState);
-    
+
     if (newState) {
       menuOpacity.value = withTiming(1, { duration: 200 });
       menuScale.value = withSpring(1, { damping: 15, stiffness: 300 });
@@ -144,10 +144,7 @@ export function FloatingTabBar() {
     const rotation = useSharedValue(0);
 
     const buttonAnimatedStyle = useAnimatedStyle(() => ({
-      transform: [
-        { scale: scale.value },
-        { rotate: `${rotation.value}deg` },
-      ],
+      transform: [{ scale: scale.value }, { rotate: `${rotation.value}deg` }],
     }));
 
     return (
@@ -168,11 +165,7 @@ export function FloatingTabBar() {
         style={styles.plusButton}
       >
         <Animated.View style={[styles.plusButtonContent, buttonAnimatedStyle]}>
-          <MaterialCommunityIcons
-            name="plus"
-            size={24}
-            color={Colors.icon}
-          />
+          <MaterialCommunityIcons name="plus" size={24} color={Colors.icon} />
         </Animated.View>
       </Pressable>
     );
@@ -293,11 +286,7 @@ export function FloatingTabBar() {
             {/* Menu */}
             <Animated.View style={[styles.menuContainer, menuAnimatedStyle]}>
               {Platform.OS === "ios" ? (
-                <BlurView
-                  intensity={80}
-                  style={styles.menuBlur}
-                  tint="dark"
-                >
+                <BlurView intensity={80} style={styles.menuBlur} tint="dark">
                   <View style={styles.menuStack}>
                     <MenuButton
                       icon="bell-outline"
@@ -310,12 +299,7 @@ export function FloatingTabBar() {
                   </View>
                 </BlurView>
               ) : (
-                <View
-                  style={[
-                    styles.menuBlur,
-                    styles.androidContainer,
-                  ]}
-                >
+                <View style={[styles.menuBlur, styles.androidContainer]}>
                   <View style={styles.menuStack}>
                     <MenuButton
                       icon="bell-outline"
@@ -340,12 +324,7 @@ export function FloatingTabBar() {
                 <PlusButton />
               </BlurView>
             ) : (
-              <View
-                style={[
-                  styles.plusButtonBlur,
-                  styles.androidContainer,
-                ]}
-              >
+              <View style={[styles.plusButtonBlur, styles.androidContainer]}>
                 <PlusButton />
               </View>
             )}
@@ -444,12 +423,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
-    width: 56,
-    height: 56,
+    width: 64,
+    height: 64,
   },
   plusButton: {
-    width: 56,
-    height: 56,
+    width: 64,
+    height: 64,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -461,7 +440,7 @@ const styles = StyleSheet.create({
   },
   menuContainer: {
     position: "absolute",
-    bottom: 70,
+    bottom: 78,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -494,7 +473,7 @@ const styles = StyleSheet.create({
   menuButtonContent: {
     alignItems: "center",
     justifyContent: "center",
-    width: 40,
-    height: 40,
+    width: 48,
+    height: 48,
   },
 });

@@ -1,4 +1,5 @@
 import { Colors, Fonts } from "@/constants/theme";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -20,6 +21,12 @@ export default function LoginScreen() {
 
   const handleLogin = () => {
     console.log("Login attempt:", { email, password });
+    router.replace("/(tabs)");
+  };
+
+  const handleGoogleSignIn = () => {
+    // TODO: Implement Google sign in
+    console.log("Google sign in");
     router.replace("/(tabs)");
   };
 
@@ -96,6 +103,22 @@ export default function LoginScreen() {
           >
             <Text style={styles.loginButtonText}>Sign in</Text>
           </TouchableOpacity>
+
+          {/* Divider */}
+          <View style={styles.divider}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>or</Text>
+            <View style={styles.dividerLine} />
+          </View>
+
+          {/* Google Sign In Button */}
+          <TouchableOpacity
+            style={styles.googleButton}
+            onPress={handleGoogleSignIn}
+          >
+            <FontAwesome5 name="google" size={20} color={Colors.text} />
+            <Text style={styles.googleButtonText}>Sign up with Google</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Footer */}
@@ -144,6 +167,40 @@ const styles = StyleSheet.create({
   },
   form: {
     width: "100%",
+  },
+  googleButton: {
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    borderRadius: 12,
+    paddingVertical: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.08)",
+  },
+  googleButtonText: {
+    fontSize: 16,
+    fontFamily: Fonts.bodyBold,
+    color: Colors.text,
+    marginLeft: 12,
+    letterSpacing: 0.3,
+  },
+  divider: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 24,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.08)",
+  },
+  dividerText: {
+    fontSize: 14,
+    fontFamily: Fonts.body,
+    color: Colors.icon,
+    marginHorizontal: 16,
   },
   inputContainer: {
     marginBottom: 24,

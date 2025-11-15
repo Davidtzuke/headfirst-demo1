@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default */
-import HorizontalBarChart from "@/components/analysis/HorizontalBarChart";
+import CollapsibleChartGroup from "@/components/analysis/CollapsibleChartGroup";
 import { Colors } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "expo-router";
@@ -58,14 +58,40 @@ export default function HomeScreen() {
           </Text>
         </View>
 
-        <HorizontalBarChart
-          title="Triggers"
-          data={[
-            { name: "Stress", value: 0.85 },
-            { name: "Lack of Sleep", value: -0.7 },
-            { name: "Caffeine", value: 0.55 },
+        <CollapsibleChartGroup
+          charts={[
+            {
+              id: "triggers",
+              title: "Triggers",
+              data: [
+                { name: "Stress", value: 0.85 },
+                { name: "Lack of Sleep", value: -0.7 },
+                { name: "Caffeine", value: 0.55 },
+              ],
+              maxAbsValue: 1,
+            },
+            {
+              id: "preceding_symptoms",
+              title: "Preceding Symptoms",
+              data: [
+                { name: "Blurred Vision", value: 0.8 },
+                { name: "Neck Pain", value: -0.65 },
+                { name: "Fatigue", value: 0.45 },
+              ],
+              maxAbsValue: 1,
+            },
+            {
+              id: "symptoms",
+              title: "Symptoms",
+              data: [
+                { name: "Headache", value: 0.95 },
+                { name: "Nausea", value: -0.6 },
+                { name: "Light Sensitivity", value: 0.5 },
+              ],
+              maxAbsValue: 1,
+            },
           ]}
-          maxAbsValue={1}
+          defaultExpandedId="triggers"
         />
       </View>
     </SafeAreaView>

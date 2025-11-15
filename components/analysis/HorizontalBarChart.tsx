@@ -1,7 +1,12 @@
 import { Colors } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 export type BarItem = {
   name: string;
@@ -12,32 +17,69 @@ interface HorizontalBarChartProps {
   title: string;
   data: BarItem[];
   maxAbsValue: number; // for scaling bars
+  isExpanded?: boolean;
+  onToggle?: () => void;
 }
 
 export const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
   title,
   data,
   maxAbsValue,
+  isExpanded = false,
+  onToggle,
 }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [shouldRender, setShouldRender] = useState(isExpanded);
+  const rotation = useSharedValue(isExpanded ? 0 : 180);
+  const maxHeight = useSharedValue(isExpanded ? 1000 : 0);
+
+  useEffect(() => {
+    if (isExpanded) {
+      setShouldRender(true);
+    } else {
+      // Delay unmounting to allow collapse animation to play
+      const timer = setTimeout(() => setShouldRender(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isExpanded]);
+
+  useEffect(() => {
+    rotation.value = withTiming(isExpanded ? 0 : 180, { duration: 300 });
+    maxHeight.value = withTiming(isExpanded ? 1000 : 0, { duration: 300 });
+  }, [isExpanded, rotation, maxHeight]);
+
+  const toggleExpanded = () => {
+    onToggle?.();
+  };
+
+  const chevronStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${rotation.value}deg` }],
+    };
+  });
+
+  const containerStyle = useAnimatedStyle(() => {
+    return {
+      maxHeight: maxHeight.value,
+      opacity: maxHeight.value > 0 ? 1 : 0,
+    };
+  });
 
   return (
     <View style={styles.root}>
       <TouchableOpacity
         style={styles.header}
-        onPress={() => setIsExpanded(!isExpanded)}
+        onPress={toggleExpanded}
         activeOpacity={0.7}
       >
         <Text style={styles.headerText}>{title}</Text>
-        <MaterialCommunityIcons
-          name={isExpanded ? "chevron-up" : "chevron-down"}
-          size={24}
-          color="#fff"
-        />
+        <Animated.View style={chevronStyle}>
+          <MaterialCommunityIcons name="chevron-up" size={24} color="#fff" />
+        </Animated.View>
       </TouchableOpacity>
 
-      {isExpanded && (
-        <View style={styles.chartContainer}>
+      {shouldRender && (
+        <Animated.View style={[styles.contentWrapper, containerStyle]}>
+          <View style={styles.chartContainer}>
           {data.map((item) => {
             const percentage = (item.value / maxAbsValue) * 100;
             const isPositive = item.value >= 0;
@@ -81,7 +123,8 @@ export const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
               </View>
             );
           })}
-        </View>
+          </View>
+        </Animated.View>
       )}
     </View>
   );
@@ -107,6 +150,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     color: "#fff",
+  },
+  contentWrapper: {
+    overflow: "hidden",
   },
   chartContainer: {
     padding: 16,

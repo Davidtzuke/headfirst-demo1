@@ -133,14 +133,12 @@ export function FloatingTabBar() {
 
   const handleMenuButton1 = () => {
     closeMenu();
-    // Add your action here
-    console.log("Menu button 1 pressed");
+
+    handleNavigation("/(tabs)/diary");
   };
 
   const handleMenuButton2 = () => {
     closeMenu();
-    // Add your action here
-    console.log("Menu button 2 pressed");
   };
 
   const PlusButton = () => {

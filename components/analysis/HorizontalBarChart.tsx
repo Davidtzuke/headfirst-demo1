@@ -1,6 +1,7 @@
 import { Colors } from "@/constants/theme";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export type BarItem = {
   name: string;
@@ -18,55 +19,70 @@ export const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
   data,
   maxAbsValue,
 }) => {
+  const [isExpanded, setIsExpanded] = useState(true);
+
   return (
     <View style={styles.root}>
-      <Text style={styles.header}>{title}</Text>
+      <TouchableOpacity
+        style={styles.header}
+        onPress={() => setIsExpanded(!isExpanded)}
+        activeOpacity={0.7}
+      >
+        <Text style={styles.headerText}>{title}</Text>
+        <MaterialCommunityIcons
+          name={isExpanded ? "chevron-up" : "chevron-down"}
+          size={24}
+          color="#fff"
+        />
+      </TouchableOpacity>
 
-      <View style={styles.chartContainer}>
-        {data.map((item) => {
-          const percentage = (item.value / maxAbsValue) * 100;
-          const isPositive = item.value >= 0;
-          const barWidthPercent = Math.abs(percentage) / 2;
+      {isExpanded && (
+        <View style={styles.chartContainer}>
+          {data.map((item) => {
+            const percentage = (item.value / maxAbsValue) * 100;
+            const isPositive = item.value >= 0;
+            const barWidthPercent = Math.abs(percentage) / 2;
 
-          return (
-            <View key={item.name} style={styles.barRow}>
-              <Text style={styles.barLabel}>{item.name}</Text>
+            return (
+              <View key={item.name} style={styles.barRow}>
+                <Text style={styles.barLabel}>{item.name}</Text>
 
-              <View style={styles.barBackground}>
-                <View style={styles.centerLine} />
+                <View style={styles.barBackground}>
+                  <View style={styles.centerLine} />
 
-                <View style={styles.barContainer}>
-                  {!isPositive && (
-                    <View style={{ width: `${barWidthPercent}%` }} />
-                  )}
+                  <View style={styles.barContainer}>
+                    {!isPositive && (
+                      <View style={{ width: `${barWidthPercent}%` }} />
+                    )}
 
-                  <View
-                    style={[
-                      styles.barFill,
-                      {
-                        width: `${barWidthPercent}%`,
-                        backgroundColor: isPositive ? "#4ae082" : "#ff4d4f",
-                        borderTopLeftRadius: isPositive ? 0 : 8,
-                        borderBottomLeftRadius: isPositive ? 0 : 8,
-                        borderTopRightRadius: isPositive ? 8 : 0,
-                        borderBottomRightRadius: isPositive ? 8 : 0,
-                      },
-                    ]}
-                  />
+                    <View
+                      style={[
+                        styles.barFill,
+                        {
+                          width: `${barWidthPercent}%`,
+                          backgroundColor: isPositive ? "#4ae082" : "#ff4d4f",
+                          borderTopLeftRadius: isPositive ? 0 : 8,
+                          borderBottomLeftRadius: isPositive ? 0 : 8,
+                          borderTopRightRadius: isPositive ? 8 : 0,
+                          borderBottomRightRadius: isPositive ? 8 : 0,
+                        },
+                      ]}
+                    />
 
-                  {isPositive && (
-                    <View style={{ width: `${barWidthPercent}%` }} />
-                  )}
+                    {isPositive && (
+                      <View style={{ width: `${barWidthPercent}%` }} />
+                    )}
+                  </View>
                 </View>
-              </View>
 
-              <Text style={styles.barValue}>
-                {Math.round(item.value * 100)}%
-              </Text>
-            </View>
-          );
-        })}
-      </View>
+                <Text style={styles.barValue}>
+                  {Math.round(item.value * 100)}%
+                </Text>
+              </View>
+            );
+          })}
+        </View>
+      )}
     </View>
   );
 };
@@ -80,12 +96,17 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255, 248, 220, 0.2)", // Colors.tint with 20% opacity
   },
   header: {
-    fontSize: 20,
-    fontWeight: "600",
-    color: "#fff",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 12,
     backgroundColor: Colors.background,
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#fff",
   },
   chartContainer: {
     padding: 16,

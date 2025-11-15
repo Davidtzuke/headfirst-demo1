@@ -1,7 +1,6 @@
 import { Colors, Fonts } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 // Mock user data
 const MOCK_USER = {
@@ -29,12 +28,8 @@ const MOCK_PREFERENCES = {
 };
 
 export default function ProfileScreen() {
-  const insets = useSafeAreaInsets();
-
   return (
-    <View
-      style={[styles.container, { paddingTop: Math.max(insets.top, 20) + 60 }]}
-    >
+    <View style={styles.container}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}

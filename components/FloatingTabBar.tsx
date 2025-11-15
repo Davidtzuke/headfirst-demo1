@@ -43,7 +43,7 @@ export function FloatingTabBar() {
   const gap = 10; // Gap between tab bar and icon button
   const tabBarWidth = screenWidth - 40 - iconButtonWidth - gap; // Account for padding, icon button, and gap
   const [isMenuOpen, setIsMenuOpen] = useState(false);
- 
+
   const menuOpacity = useSharedValue(0);
   const menuScale = useSharedValue(0.8);
   const menuTranslateY = useSharedValue(10);
@@ -109,7 +109,7 @@ export function FloatingTabBar() {
   const toggleMenu = () => {
     const newState = !isMenuOpen;
     setIsMenuOpen(newState);
- 
+
     if (newState) {
       menuOpacity.value = withTiming(1, { duration: 200 });
       menuScale.value = withTiming(1, { duration: 200 });
@@ -171,11 +171,7 @@ export function FloatingTabBar() {
         style={styles.plusButton}
       >
         <Animated.View style={[styles.plusButtonContent, buttonAnimatedStyle]}>
-          <MaterialCommunityIcons
-            name="plus"
-            size={24}
-            color={Colors.icon}
-          />
+          <MaterialCommunityIcons name="plus" size={24} color={Colors.icon} />
         </Animated.View>
       </Pressable>
     );
@@ -299,11 +295,11 @@ export function FloatingTabBar() {
                 <BlurView intensity={80} style={styles.menuBlur} tint="dark">
                   <View style={styles.menuStack}>
                     <MenuButton
-                      icon="bell-outline"
+                      icon="notebook-outline"
                       onPress={handleMenuButton1}
                     />
                     <MenuButton
-                      icon="cog-outline"
+                      icon="thought-bubble-outline"
                       onPress={handleMenuButton2}
                     />
                   </View>
@@ -316,7 +312,7 @@ export function FloatingTabBar() {
                       onPress={handleMenuButton1}
                     />
                     <MenuButton
-                      icon="cog-outline"
+                      icon="thought-bubble-outline"
                       onPress={handleMenuButton2}
                     />
                   </View>

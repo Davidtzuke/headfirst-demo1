@@ -1,4 +1,5 @@
 import { Colors, Fonts } from "@/constants/theme";
+import { useStorageState } from "@/hooks/useStorageState";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -18,15 +19,20 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const insets = useSafeAreaInsets();
+  const [, setIsAuthenticated] = useStorageState("isAuthenticated");
 
   const handleLogin = () => {
     console.log("Login attempt:", { email, password });
+    // Set authenticated state
+    setIsAuthenticated("true");
     router.replace("/(tabs)");
   };
 
   const handleGoogleSignIn = () => {
     // TODO: Implement Google sign in
     console.log("Google sign in");
+    // Set authenticated state
+    setIsAuthenticated("true");
     router.replace("/(tabs)");
   };
 

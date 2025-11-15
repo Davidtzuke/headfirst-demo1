@@ -1,23 +1,23 @@
-import { Colors } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Slider from "@react-native-community/slider";
 import React, { useState } from "react";
 import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
-  ScrollView,
-  TextInput,
   LayoutAnimation,
   Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
   UIManager,
-  KeyboardAvoidingView,
+  View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Slider from "@react-native-community/slider";
 
 // Enable LayoutAnimation on Android
-if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
+if (
+  Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
@@ -50,9 +50,11 @@ const SAMPLE_ENTRIES: DiaryEntry[] = [
     duration: { value: 6, unit: "hours" },
     remedy: {
       tried: "yes",
-      description: "Took ibuprofen and rested in a dark room. Pain subsided after 4 hours.",
+      description:
+        "Took ibuprofen and rested in a dark room. Pain subsided after 4 hours.",
     },
-    notes: "Intense migraine triggered by project deadline stress. Visual aura started around 2pm.",
+    notes:
+      "Intense migraine triggered by project deadline stress. Visual aura started around 2pm.",
   },
   {
     id: "2",
@@ -62,9 +64,11 @@ const SAMPLE_ENTRIES: DiaryEntry[] = [
     duration: { value: 1, unit: "days" },
     remedy: {
       tried: "yes",
-      description: "Applied cold compress and took prescribed medication. Helped reduce intensity.",
+      description:
+        "Applied cold compress and took prescribed medication. Helped reduce intensity.",
     },
-    notes: "Woke up with moderate pain on the right side. Likely due to irregular sleep schedule.",
+    notes:
+      "Woke up with moderate pain on the right side. Likely due to irregular sleep schedule.",
   },
   {
     id: "3",
@@ -76,7 +80,8 @@ const SAMPLE_ENTRIES: DiaryEntry[] = [
       tried: "no",
       description: "Decided to ride it out without medication this time.",
     },
-    notes: "Mild migraine after skipping morning coffee. Interesting to note the caffeine dependency.",
+    notes:
+      "Mild migraine after skipping morning coffee. Interesting to note the caffeine dependency.",
   },
 ];
 
@@ -105,14 +110,21 @@ function DiaryCreationCard({
 }) {
   const [diaryName, setDiaryName] = useState("");
   const [painLevel, setPainLevel] = useState(5);
-  const [durationUnit, setDurationUnit] = useState<"hours" | "days" | null>(null);
+  const [durationUnit, setDurationUnit] = useState<"hours" | "days" | null>(
+    null
+  );
   const [durationValue, setDurationValue] = useState("");
   const [remedyTried, setRemedyTried] = useState<"yes" | "no" | null>(null);
   const [remedyDescription, setRemedyDescription] = useState("");
   const [notes, setNotes] = useState("");
 
   const handleSave = () => {
-    if (!diaryName.trim() || !durationUnit || !durationValue || remedyTried === null) {
+    if (
+      !diaryName.trim() ||
+      !durationUnit ||
+      !durationValue ||
+      remedyTried === null
+    ) {
       return;
     }
 
@@ -141,7 +153,8 @@ function DiaryCreationCard({
     onToggle();
   };
 
-  const canSave = diaryName.trim() && durationUnit && durationValue && remedyTried !== null;
+  const canSave =
+    diaryName.trim() && durationUnit && durationValue && remedyTried !== null;
 
   return (
     <View style={styles.expandableCard}>
@@ -154,13 +167,13 @@ function DiaryCreationCard({
         <MaterialCommunityIcons
           name={isExpanded ? "minus" : "plus"}
           size={22}
-          color="rgba(255, 255, 255, 0.92)"
+          color="#ECEDEE"
         />
         <Text style={styles.expandableHeaderText}>Create Diary</Text>
         <MaterialCommunityIcons
           name={isExpanded ? "chevron-up" : "chevron-down"}
           size={22}
-          color="rgba(255, 255, 255, 0.55)"
+          color="rgba(236, 237, 238, 0.55)"
         />
       </TouchableOpacity>
 
@@ -173,7 +186,7 @@ function DiaryCreationCard({
             <TextInput
               style={styles.textInput}
               placeholder="e.g., Morning Migraine"
-              placeholderTextColor="rgba(255, 255, 255, 0.35)"
+              placeholderTextColor="rgba(236, 237, 238, 0.35)"
               value={diaryName}
               onChangeText={setDiaryName}
             />
@@ -199,8 +212,8 @@ function DiaryCreationCard({
               value={painLevel}
               onValueChange={setPainLevel}
               minimumTrackTintColor="#5ad899"
-              maximumTrackTintColor="rgba(255, 255, 255, 0.15)"
-              thumbTintColor="#FFFFFF"
+              maximumTrackTintColor="rgba(236, 237, 238, 0.15)"
+              thumbTintColor="#FFF8DC"
             />
             <View style={styles.sliderLabels}>
               <Text style={styles.sliderLabelText}>0</Text>
@@ -249,7 +262,7 @@ function DiaryCreationCard({
               <TextInput
                 style={[styles.textInput, { marginTop: 12 }]}
                 placeholder={`Enter number of ${durationUnit}`}
-                placeholderTextColor="rgba(255, 255, 255, 0.35)"
+                placeholderTextColor="rgba(236, 237, 238, 0.35)"
                 value={durationValue}
                 onChangeText={setDurationValue}
                 keyboardType="numeric"
@@ -300,7 +313,7 @@ function DiaryCreationCard({
               <TextInput
                 style={[styles.textAreaInput, { marginTop: 12 }]}
                 placeholder="Describe what you tried and whether it helped…"
-                placeholderTextColor="rgba(255, 255, 255, 0.35)"
+                placeholderTextColor="rgba(236, 237, 238, 0.35)"
                 value={remedyDescription}
                 onChangeText={setRemedyDescription}
                 multiline
@@ -314,8 +327,8 @@ function DiaryCreationCard({
             <Text style={styles.fieldLabel}>Notes</Text>
             <TextInput
               style={styles.textAreaInput}
-              placeholder="Write your diary entry…"
-              placeholderTextColor="rgba(255, 255, 255, 0.35)"
+              placeholder="Write your diary entry..."
+              placeholderTextColor="rgba(236, 237, 238, 0.35)"
               value={notes}
               onChangeText={setNotes}
               multiline
@@ -329,7 +342,12 @@ function DiaryCreationCard({
             onPress={handleSave}
             disabled={!canSave}
           >
-            <Text style={[styles.saveButtonText, !canSave && styles.saveButtonTextDisabled]}>
+            <Text
+              style={[
+                styles.saveButtonText,
+                !canSave && styles.saveButtonTextDisabled,
+              ]}
+            >
               Save Diary Entry
             </Text>
           </TouchableOpacity>
@@ -351,6 +369,7 @@ function DiaryEntryCard({ entry }: { entry: DiaryEntry }) {
     <TouchableOpacity style={styles.diaryCard} activeOpacity={0.7}>
       <View style={styles.diaryCardHeader}>
         <Text style={styles.diaryCardTitle}>{entry.diaryName}</Text>
+
         <View
           style={[
             styles.painLevelChip,
@@ -358,7 +377,10 @@ function DiaryEntryCard({ entry }: { entry: DiaryEntry }) {
           ]}
         >
           <Text
-            style={[styles.painLevelChipText, { color: getPainLevelColor(entry.painLevel) }]}
+            style={[
+              styles.painLevelChipText,
+              { color: getPainLevelColor(entry.painLevel) },
+            ]}
           >
             {entry.painLevel}/10
           </Text>
@@ -372,7 +394,7 @@ function DiaryEntryCard({ entry }: { entry: DiaryEntry }) {
           <MaterialCommunityIcons
             name="clock-outline"
             size={14}
-            color="rgba(255, 255, 255, 0.55)"
+            color="rgba(236, 237, 238, 0.55)"
           />
           <Text style={styles.metaText}>
             {entry.duration.value} {entry.duration.unit}
@@ -445,41 +467,30 @@ export default function DiaryScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.root}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+    <View style={styles.root}>
+      <ScrollView
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
       >
-        {/* Header - Reserved space for logo */}
-        <View style={styles.header}>
-          {/* Empty space reserved for future logo */}
+        {/* Expandable Create Diary Card */}
+        <DiaryCreationCard
+          isExpanded={isExpanded}
+          onToggle={toggleExpanded}
+          onSave={handleSaveDiary}
+        />
+
+        {/* Saved Diaries List */}
+        <View style={styles.diariesList}>
+          <Text style={styles.diariesListTitle}>Your Diary Entries</Text>
+          {entries.map((entry) => (
+            <DiaryEntryCard key={entry.id} entry={entry} />
+          ))}
         </View>
 
-        <ScrollView
-          style={styles.scrollContainer}
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Expandable Create Diary Card */}
-          <DiaryCreationCard
-            isExpanded={isExpanded}
-            onToggle={toggleExpanded}
-            onSave={handleSaveDiary}
-          />
-
-          {/* Saved Diaries List */}
-          <View style={styles.diariesList}>
-            <Text style={styles.diariesListTitle}>Your Diary Entries</Text>
-            {entries.map((entry) => (
-              <DiaryEntryCard key={entry.id} entry={entry} />
-            ))}
-          </View>
-
-          <View style={{ height: 40 }} />
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+        <View style={{ height: 40 }} />
+      </ScrollView>
+    </View>
   );
 }
 
@@ -488,13 +499,8 @@ export default function DiaryScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#0A0A24",
-  },
-  header: {
-    height: 70,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
+    backgroundColor: "#020003",
+    paddingTop: 16,
   },
   scrollContainer: {
     flex: 1,
@@ -503,10 +509,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   expandableCard: {
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: "rgba(236, 237, 238, 0.05)",
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.08)",
+    borderColor: "rgba(236, 237, 238, 0.08)",
     marginBottom: 24,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -524,7 +530,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontWeight: "600",
-    color: "rgba(255, 255, 255, 0.92)",
+    color: "#ECEDEE",
     marginLeft: 12,
   },
   expandedContent: {
@@ -537,33 +543,33 @@ const styles = StyleSheet.create({
   fieldLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: "rgba(255, 255, 255, 0.92)",
+    color: "#ECEDEE",
     marginBottom: 10,
   },
   textInput: {
-    backgroundColor: "rgba(255, 255, 255, 0.06)",
+    backgroundColor: "rgba(236, 237, 238, 0.06)",
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.08)",
+    borderColor: "rgba(236, 237, 238, 0.08)",
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 15,
-    color: "rgba(255, 255, 255, 0.92)",
+    color: "#ECEDEE",
   },
   textAreaInput: {
-    backgroundColor: "rgba(255, 255, 255, 0.03)",
+    backgroundColor: "rgba(236, 237, 238, 0.03)",
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.08)",
+    borderColor: "rgba(236, 237, 238, 0.08)",
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 15,
-    color: "rgba(255, 255, 255, 0.92)",
+    color: "#ECEDEE",
     minHeight: 100,
   },
   dateText: {
     fontSize: 14,
-    color: "rgba(255, 255, 255, 0.55)",
+    color: "rgba(236, 237, 238, 0.55)",
     fontWeight: "500",
   },
   sliderHeader: {
@@ -588,7 +594,7 @@ const styles = StyleSheet.create({
   },
   sliderLabelText: {
     fontSize: 12,
-    color: "rgba(255, 255, 255, 0.45)",
+    color: "rgba(236, 237, 238, 0.45)",
   },
   pillGroup: {
     flexDirection: "row",
@@ -596,28 +602,28 @@ const styles = StyleSheet.create({
   },
   pillButton: {
     flex: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: "rgba(236, 237, 238, 0.05)",
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.08)",
+    borderColor: "rgba(236, 237, 238, 0.08)",
     paddingVertical: 12,
     alignItems: "center",
     justifyContent: "center",
   },
   pillButtonActive: {
-    backgroundColor: "#FFFFFF",
-    borderColor: "#FFFFFF",
+    backgroundColor: "#FFF8DC",
+    borderColor: "#FFF8DC",
   },
   pillButtonText: {
     fontSize: 15,
     fontWeight: "600",
-    color: "rgba(255, 255, 255, 0.65)",
+    color: "rgba(236, 237, 238, 0.65)",
   },
   pillButtonTextActive: {
-    color: "#0A0A24",
+    color: "#020003",
   },
   saveButton: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFF8DC",
     borderRadius: 14,
     paddingVertical: 16,
     alignItems: "center",
@@ -630,15 +636,15 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   saveButtonDisabled: {
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backgroundColor: "rgba(236, 237, 238, 0.1)",
   },
   saveButtonText: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#0A0A24",
+    color: "#020003",
   },
   saveButtonTextDisabled: {
-    color: "rgba(255, 255, 255, 0.35)",
+    color: "rgba(236, 237, 238, 0.35)",
   },
   diariesList: {
     marginBottom: 20,
@@ -646,16 +652,16 @@ const styles = StyleSheet.create({
   diariesListTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "rgba(255, 255, 255, 0.92)",
+    color: "#ECEDEE",
     marginBottom: 16,
   },
   diaryCard: {
-    backgroundColor: "rgba(255, 255, 255, 0.03)",
+    backgroundColor: "rgba(236, 237, 238, 0.03)",
     borderRadius: 17,
     padding: 16,
     marginBottom: 14,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.06)",
+    borderColor: "rgba(236, 237, 238, 0.06)",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
@@ -672,7 +678,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontWeight: "700",
-    color: "rgba(255, 255, 255, 0.92)",
+    color: "#ECEDEE",
     marginRight: 12,
   },
   painLevelChip: {
@@ -686,7 +692,7 @@ const styles = StyleSheet.create({
   },
   diaryCardDate: {
     fontSize: 13,
-    color: "rgba(255, 255, 255, 0.55)",
+    color: "rgba(236, 237, 238, 0.55)",
     marginBottom: 12,
   },
   diaryCardMeta: {
@@ -702,7 +708,7 @@ const styles = StyleSheet.create({
   },
   metaText: {
     fontSize: 13,
-    color: "rgba(255, 255, 255, 0.55)",
+    color: "rgba(236, 237, 238, 0.55)",
     fontWeight: "500",
   },
   remedyIndicator: {
@@ -716,7 +722,7 @@ const styles = StyleSheet.create({
   },
   diaryCardPreview: {
     fontSize: 14,
-    color: "rgba(255, 255, 255, 0.65)",
+    color: "rgba(236, 237, 238, 0.65)",
     lineHeight: 20,
   },
 });

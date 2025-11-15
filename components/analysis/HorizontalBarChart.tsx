@@ -1,4 +1,4 @@
-import { Colors } from "@/constants/theme";
+import { Colors, Fonts } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     color: "#fff",
+    fontFamily: Fonts.headingBold,
   },
   contentWrapper: {
     overflow: "hidden",
@@ -156,6 +157,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.tint,
     fontWeight: "500",
+    fontFamily: Fonts.bodyMedium,
   },
   barBackground: {
     flex: 1,
@@ -191,6 +193,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.tint,
     fontWeight: "500",
+    fontFamily: Fonts.bodyMedium,
   },
 });
 

@@ -1,4 +1,4 @@
-import { Colors } from "@/constants/theme";
+import { Colors, Fonts } from "@/constants/theme";
 import React, { useMemo } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import Svg, {
@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#fff",
     paddingHorizontal: 4,
+    fontFamily: Fonts.headingBold,
   },
   chartContainer: {
     backgroundColor: Colors.background,
@@ -267,6 +268,7 @@ const styles = StyleSheet.create({
     color: Colors.tint,
     fontSize: 14,
     opacity: 0.6,
+    fontFamily: Fonts.body,
   },
 });
 

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-named-as-default */
 import CollapsibleChartGroup from "@/components/analysis/CollapsibleChartGroup";
-import FeatureGraphDropdown from "@/components/analysis/FeatureGraphDropdown";
+import FeatureDropdown from "@/components/analysis/FeatureDropdown";
 import { Colors } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "expo-router";
@@ -99,17 +99,7 @@ export default function AnalysisScreen() {
           />
         </View>
 
-        <FeatureGraphDropdown
-          title="My Feature Over Time"
-          data={[
-            { date: new Date("2024-01-01"), value: 10 },
-            { date: new Date("2024-01-05"), value: 15 },
-            { date: new Date("2024-01-10"), value: 8 },
-            { date: new Date("2024-01-15"), value: 20 },
-          ]}
-          height={200}
-          showGrid={true}
-        />
+        <FeatureDropdown />
       </ScrollView>
     </SafeAreaView>
   );

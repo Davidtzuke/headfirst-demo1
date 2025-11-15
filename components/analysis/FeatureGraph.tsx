@@ -23,11 +23,11 @@ interface FeatureGraphDropdownProps {
 }
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
-const CHART_WIDTH = SCREEN_WIDTH - 80; // Account for padding
-const DEFAULT_HEIGHT = 200;
-const DEFAULT_PADDING = 40;
+const CHART_WIDTH = SCREEN_WIDTH - 70;
+const DEFAULT_HEIGHT = 400;
+const DEFAULT_PADDING = 30;
 
-export const FeatureGraphDropdown: React.FC<FeatureGraphDropdownProps> = ({
+export const FeatureGraph: React.FC<FeatureGraphDropdownProps> = ({
   title,
   data,
   height = DEFAULT_HEIGHT,
@@ -129,6 +129,7 @@ export const FeatureGraphDropdown: React.FC<FeatureGraphDropdownProps> = ({
     return (
       <View style={styles.container}>
         {title && <Text style={styles.title}>{title}</Text>}
+
         <View style={[styles.chartContainer, { height }]}>
           <Text style={styles.emptyText}>No data available</Text>
         </View>
@@ -139,6 +140,7 @@ export const FeatureGraphDropdown: React.FC<FeatureGraphDropdownProps> = ({
   return (
     <View style={styles.container}>
       {title && <Text style={styles.title}>{title}</Text>}
+
       <View style={[styles.chartContainer, { height }]}>
         <Svg width={CHART_WIDTH} height={height}>
           {/* Grid lines */}
@@ -247,6 +249,10 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     marginVertical: 8,
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: 12,
+    borderColor: "rgba(255, 248, 220, 0.2)",
   },
   title: {
     fontSize: 20,
@@ -256,11 +262,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   chartContainer: {
-    borderRadius: 12,
     backgroundColor: Colors.background,
-    borderWidth: 1,
-    borderColor: "rgba(255, 248, 220, 0.2)",
-    padding: 16,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -271,4 +273,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FeatureGraphDropdown;
+export default FeatureGraph;

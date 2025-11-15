@@ -23,9 +23,9 @@ interface FeatureGraphDropdownProps {
 }
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
-const CHART_WIDTH = SCREEN_WIDTH - 70;
+const CHART_WIDTH = SCREEN_WIDTH - 60;
 const DEFAULT_HEIGHT = 400;
-const DEFAULT_PADDING = 30;
+const DEFAULT_PADDING = 40;
 
 export const FeatureGraph: React.FC<FeatureGraphDropdownProps> = ({
   title,

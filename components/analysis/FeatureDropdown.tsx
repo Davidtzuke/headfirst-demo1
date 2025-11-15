@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Dropdown from "../Dropdown";
 import FeatureGraph from "./FeatureGraph";
+import FeatureHistogram from "./FeatureHistogram";
 
 // --------------------------------------------
 // Utility
@@ -181,9 +182,7 @@ const FEATURES = [
 const data = generateAllMetrics();
 
 const FeatureDropdown = () => {
-  const [open, setOpen] = useState(false);
   const [feature, setFeature] = useState<string>("steps");
-  const [items, setItems] = useState(FEATURES);
 
   return (
     <View style={styles.container}>
@@ -199,6 +198,12 @@ const FeatureDropdown = () => {
         data={data[feature]}
         height={320}
         showGrid={true}
+      />
+
+      <FeatureHistogram
+        title={FEATURES.find((f) => f.value === feature)?.label || "Feature"}
+        data={data[feature]}
+        bins={8}
       />
     </View>
   );

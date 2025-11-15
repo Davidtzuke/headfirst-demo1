@@ -15,7 +15,6 @@ export interface DateValueDataPoint {
 }
 
 interface FeatureGraphDropdownProps {
-  title?: string;
   data: DateValueDataPoint[];
   height?: number;
   padding?: number;
@@ -28,7 +27,6 @@ const DEFAULT_HEIGHT = 400;
 const DEFAULT_PADDING = 40;
 
 export const FeatureGraph: React.FC<FeatureGraphDropdownProps> = ({
-  title,
   data,
   height = DEFAULT_HEIGHT,
   padding = DEFAULT_PADDING,
@@ -128,7 +126,7 @@ export const FeatureGraph: React.FC<FeatureGraphDropdownProps> = ({
   if (data.length === 0) {
     return (
       <View style={styles.container}>
-        {title && <Text style={styles.title}>{title}</Text>}
+        <Text style={styles.title}>Overview</Text>
 
         <View style={[styles.chartContainer, { height }]}>
           <Text style={styles.emptyText}>No data available</Text>
@@ -139,7 +137,7 @@ export const FeatureGraph: React.FC<FeatureGraphDropdownProps> = ({
 
   return (
     <View style={styles.container}>
-      {title && <Text style={styles.title}>{title}</Text>}
+      <Text style={styles.title}>Overview</Text>
 
       <View style={[styles.chartContainer, { height }]}>
         <Svg width={CHART_WIDTH} height={height}>
@@ -258,7 +256,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     color: "#fff",
-    marginBottom: 12,
     paddingHorizontal: 4,
   },
   chartContainer: {

@@ -46,6 +46,10 @@ export const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
                       {
                         width: `${barWidthPercent}%`,
                         backgroundColor: isPositive ? "#4ae082" : "#ff4d4f",
+                        borderTopLeftRadius: isPositive ? 0 : 8,
+                        borderBottomLeftRadius: isPositive ? 0 : 8,
+                        borderTopRightRadius: isPositive ? 8 : 0,
+                        borderBottomRightRadius: isPositive ? 8 : 0,
                       },
                     ]}
                   />
@@ -56,7 +60,9 @@ export const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
                 </View>
               </View>
 
-              <Text style={styles.barValue}>{item.value.toFixed(2)}</Text>
+              <Text style={styles.barValue}>
+                {Math.round(item.value * 100)}%
+              </Text>
             </View>
           );
         })}
@@ -76,7 +82,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 20,
     fontWeight: "600",
-    color: Colors.tint,
+    color: "#fff",
     paddingHorizontal: 16,
     paddingVertical: 12,
     backgroundColor: Colors.background,
@@ -101,14 +107,13 @@ const styles = StyleSheet.create({
     height: 32,
     backgroundColor: Colors.tabBarBackground,
     borderRadius: 8,
-    marginHorizontal: 8,
     position: "relative",
     overflow: "hidden",
   },
   centerLine: {
     position: "absolute",
     left: "50%",
-    width: 1,
+    width: 2,
     height: "100%",
     backgroundColor: "rgba(255, 248, 220, 0.4)", // Colors.tint with 40% opacity
     zIndex: 1,
@@ -122,12 +127,11 @@ const styles = StyleSheet.create({
   },
   barFill: {
     height: "100%",
-    borderRadius: 8,
   },
   barValue: {
     width: 50,
     textAlign: "right",
-    fontSize: 12,
+    fontSize: 14,
     color: Colors.text,
     fontWeight: "500",
   },

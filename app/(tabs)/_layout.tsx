@@ -1,11 +1,10 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
-import { LinearGradient } from "expo-linear-gradient";
 import { router, Slot, usePathname } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  Dimensions,
   Platform,
+  Pressable,
   Text,
   TouchableOpacity,
   View,
@@ -33,191 +32,253 @@ const tabs = [
   },
 ];
 
-// Custom Tab Bar Component
-function CustomTabBar() {
+const SIDEBAR_WIDTH = 280;
+
+// Sidebar Menu Component
+function SidebarMenu() {
   const insets = useSafeAreaInsets();
   const pathname = usePathname();
-  const screenWidth = Dimensions.get("window").width;
-  const tabWidth = screenWidth / tabs.length;
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Add state to force re-renders
-  const [currentTab, setCurrentTab] = useState(0);
+  // Determine active route
+  const getActiveIndex = () => {
+    if (pathname.includes("/analysis")) return 1;
+    if (pathname.includes("/forum")) return 2;
+    return 0;
+  };
 
-  // Determine active index based on current route
-  let activeIndex = 0; // Default to home
-  if (pathname.includes("/analysis")) {
-    activeIndex = 1;
-  } else if (pathname.includes("/forum")) {
-    activeIndex = 2;
-  }
+  const activeIndex = getActiveIndex();
 
-  // Update current tab state when route changes
-  useEffect(() => {
-    setCurrentTab(activeIndex);
-  }, [activeIndex]);
-
-  const translateX = useSharedValue(activeIndex * tabWidth);
+  const translateX = useSharedValue(-SIDEBAR_WIDTH);
 
   useEffect(() => {
-    translateX.value = withSpring(currentTab * tabWidth, {
+    translateX.value = withSpring(isOpen ? 0 : -SIDEBAR_WIDTH, {
       damping: 20,
       stiffness: 300,
       mass: 1,
-      overshootClamping: false,
     });
-  }, [currentTab, tabWidth, translateX]);
+  }, [isOpen, translateX]);
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: translateX.value + tabWidth / 2 - 32 }],
+  const sidebarStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
   }));
 
-  const tabBarHeight = Platform.OS === "ios" ? 100 : 80;
+  const overlayOpacity = useSharedValue(0);
+
+  useEffect(() => {
+    overlayOpacity.value = withSpring(isOpen ? 1 : 0, {
+      damping: 20,
+      stiffness: 300,
+    });
+  }, [isOpen, overlayOpacity]);
+
+  const overlayStyle = useAnimatedStyle(() => ({
+    opacity: overlayOpacity.value,
+    pointerEvents: isOpen ? "auto" : "none",
+  }));
+
+  const handleNavigation = (route: string) => {
+    router.push(route as any);
+    setIsOpen(false);
+  };
 
   return (
     <>
-      {/* Extended gradient overlay that goes above the tab bar */}
-      <View
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: tabBarHeight + 80,
-          zIndex: 1,
-          pointerEvents: "none",
-        }}
+      {/* Overlay */}
+      <Animated.View
+        style={[
+          {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 998,
+          },
+          overlayStyle,
+        ]}
       >
-        <LinearGradient
-          colors={[
-            "transparent",
-            "rgba(0, 0, 0, 0.02)",
-            "rgba(0, 0, 0, 0.05)",
-            "rgba(0, 0, 0, 0.1)",
-            "rgba(0, 0, 0, 0.2)",
-            "rgba(0, 0, 0, 0.4)",
-            "rgba(0, 0, 0, 0.7)",
-            "rgba(0, 0, 0, 0.9)",
-          ]}
-          style={{ flex: 1 }}
-          locations={[0, 0.1, 0.2, 0.35, 0.5, 0.7, 0.85, 1]}
-        />
-      </View>
+        <Pressable style={{ flex: 1 }} onPress={() => setIsOpen(false)} />
+      </Animated.View>
 
-      {/* Tab Bar Container */}
-      <View
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: tabBarHeight,
-          paddingBottom: Platform.OS === "ios" ? insets.bottom : 12,
-          paddingTop: 12,
-          zIndex: 10,
-        }}
+      {/* Sidebar */}
+      <Animated.View
+        style={[
+          {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: SIDEBAR_WIDTH,
+            bottom: 0,
+            zIndex: 999,
+          },
+          sidebarStyle,
+        ]}
       >
-        {/* Blur Background */}
         {Platform.OS === "ios" ? (
           <BlurView
             intensity={80}
             style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
+              flex: 1,
             }}
             tint="dark"
-          />
+          >
+            <View style={{ flex: 1, paddingTop: insets.top }}>
+              {/* Header */}
+              <View
+                style={{
+                  paddingHorizontal: 20,
+                  paddingVertical: 20,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "rgba(255, 255, 255, 0.1)",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 24,
+                    fontWeight: "700",
+                    color: "#FFFFFF",
+                  }}
+                >
+                  Menu
+                </Text>
+              </View>
+
+              {/* Menu Items */}
+              <View style={{ paddingTop: 20 }}>
+                {tabs.map((tab, index) => {
+                  const isActive = activeIndex === index;
+                  return (
+                    <TouchableOpacity
+                      key={tab.name}
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        paddingHorizontal: 20,
+                        paddingVertical: 16,
+                        backgroundColor: isActive
+                          ? "rgba(255, 255, 255, 0.1)"
+                          : "transparent",
+                        borderLeftWidth: isActive ? 3 : 0,
+                        borderLeftColor: "#FFC107",
+                      }}
+                      onPress={() => handleNavigation(tab.route)}
+                    >
+                      <MaterialCommunityIcons
+                        name={tab.icon as any}
+                        size={24}
+                        color={isActive ? "#FFC107" : "#FFFFFF"}
+                        style={{ marginRight: 16 }}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: isActive ? "700" : "500",
+                          color: isActive ? "#FFC107" : "#FFFFFF",
+                        }}
+                      >
+                        {tab.title}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </View>
+          </BlurView>
         ) : (
           <View
             style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "rgba(2, 0, 3, 0.9)",
+              flex: 1,
+              backgroundColor: "rgba(2, 0, 3, 0.95)",
+              paddingTop: insets.top,
             }}
-          />
-        )}
-
-        {/* Tab Indicator */}
-        <Animated.View
-          style={[
-            {
-              position: "absolute",
-              top: 8,
-              width: 64,
-              height: 64,
-              zIndex: 10,
-            },
-            animatedStyle,
-          ]}
-        >
-          <View
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              position: "absolute",
-              top: 12,
-              left: 12,
-              backgroundColor: "transparent",
-              shadowColor: "rgba(255, 193, 7, 1)",
-              shadowOffset: { width: 0, height: 0 },
-              shadowOpacity: 0.8,
-              shadowRadius: 20,
-              elevation: 15,
-            }}
-          />
-        </Animated.View>
-
-        {/* Tab Items */}
-        <View
-          style={{
-            flexDirection: "row",
-            flex: 1,
-            alignItems: "center",
-            paddingHorizontal: 0,
-            zIndex: 5,
-          }}
-        >
-          {tabs.map((tab, index) => {
-            const isActive = currentTab === index;
-            return (
-              <TouchableOpacity
-                key={tab.name}
+          >
+            {/* Header */}
+            <View
+              style={{
+                paddingHorizontal: 20,
+                paddingVertical: 20,
+                borderBottomWidth: 1,
+                borderBottomColor: "rgba(255, 255, 255, 0.1)",
+              }}
+            >
+              <Text
                 style={{
-                  flex: 1,
-                  alignItems: "center",
-                  paddingVertical: 6,
-                }}
-                onPress={() => {
-                  setCurrentTab(index);
-                  router.push(tab.route as any);
+                  fontSize: 24,
+                  fontWeight: "700",
+                  color: "#FFFFFF",
                 }}
               >
-                <MaterialCommunityIcons
-                  name={tab.icon as any}
-                  size={24}
-                  color={isActive ? "#FFFFFF" : "#6B7280"}
-                />
-                <Text
-                  style={{
-                    fontSize: 10,
-                    fontWeight: isActive ? "700" : "500",
-                    color: isActive ? "#FFFFFF" : "#6B7280",
-                    marginTop: 2,
-                  }}
-                >
-                  {tab.title}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      </View>
+                Menu
+              </Text>
+            </View>
+
+            {/* Menu Items */}
+            <View style={{ paddingTop: 20 }}>
+              {tabs.map((tab, index) => {
+                const isActive = activeIndex === index;
+                return (
+                  <TouchableOpacity
+                    key={tab.name}
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      paddingHorizontal: 20,
+                      paddingVertical: 16,
+                      backgroundColor: isActive
+                        ? "rgba(255, 255, 255, 0.1)"
+                        : "transparent",
+                      borderLeftWidth: isActive ? 3 : 0,
+                      borderLeftColor: "#FFC107",
+                    }}
+                    onPress={() => handleNavigation(tab.route)}
+                  >
+                    <MaterialCommunityIcons
+                      name={tab.icon as any}
+                      size={24}
+                      color={isActive ? "#FFC107" : "#FFFFFF"}
+                      style={{ marginRight: 16 }}
+                    />
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: isActive ? "700" : "500",
+                        color: isActive ? "#FFC107" : "#FFFFFF",
+                      }}
+                    >
+                      {tab.title}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+        )}
+      </Animated.View>
+
+      {/* Menu Button */}
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          top: insets.top + 10,
+          left: 20,
+          zIndex: 1000,
+          width: 44,
+          height: 44,
+          borderRadius: 22,
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onPress={() => setIsOpen(!isOpen)}
+      >
+        <MaterialCommunityIcons
+          name={isOpen ? "close" : "menu"}
+          size={24}
+          color="#FFFFFF"
+        />
+      </TouchableOpacity>
     </>
   );
 }
@@ -226,7 +287,7 @@ export default function TabsLayout() {
   return (
     <View style={{ flex: 1 }}>
       <Slot />
-      <CustomTabBar />
+      <SidebarMenu />
     </View>
   );
 }

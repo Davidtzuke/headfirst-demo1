@@ -9,7 +9,6 @@ export interface DateValueDataPoint {
 }
 
 interface FeatureHistogramProps {
-  title?: string;
   data: DateValueDataPoint[];
   bins?: number; // number of intervals
   height?: number;

@@ -193,18 +193,9 @@ const FeatureDropdown = () => {
         placeholder="Select a feature"
       />
 
-      <FeatureGraph
-        title={FEATURES.find((f) => f.value === feature)?.label || "Feature"}
-        data={data[feature]}
-        height={320}
-        showGrid={true}
-      />
+      <FeatureGraph data={data[feature]} height={320} showGrid={true} />
 
-      <FeatureHistogram
-        title={FEATURES.find((f) => f.value === feature)?.label || "Feature"}
-        data={data[feature]}
-        bins={8}
-      />
+      <FeatureHistogram data={data[feature]} bins={8} />
     </View>
   );
 };

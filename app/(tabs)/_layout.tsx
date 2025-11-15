@@ -47,6 +47,19 @@ export default function DrawerLayout() {
           ),
         }}
       />
+      <Drawer.Screen
+        name="forum"
+        options={{
+          title: "Forum",
+          drawerIcon: ({ color }: { color: string }) => (
+            <MaterialCommunityIcons
+              name="home-outline"
+              color={color}
+              size={24}
+            />
+          ),
+        }}
+      />
     </Drawer>
   );
 }

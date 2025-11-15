@@ -18,9 +18,7 @@ export default function LoginScreen() {
   const insets = useSafeAreaInsets();
 
   const handleLogin = () => {
-    // TODO: Implement actual login logic
     console.log("Login attempt:", { email, password });
-    // Navigate to tabs after successful login
     router.replace("/(tabs)");
   };
 
@@ -90,7 +88,7 @@ export default function LoginScreen() {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Don't have an account? </Text>
+          <Text style={styles.footerText}>Don&apos;t have an account? </Text>
           <TouchableOpacity
             onPress={() => {
               // TODO: Navigate to sign up
@@ -200,4 +198,3 @@ const styles = StyleSheet.create({
     color: Colors.blue,
   },
 });
-

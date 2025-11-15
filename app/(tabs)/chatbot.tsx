@@ -39,8 +39,7 @@ const INITIAL_MESSAGES: Message[] = [
 
 const HORIZONTAL_PADDING = 20;
 const MIN_INPUT_HEIGHT = 64;
-const FLOATING_TAB_CLEARANCE = 140;
-const EXTRA_SCROLL_PADDING = 24;
+const EXTRA_SCROLL_PADDING = 16;
 const KEYBOARD_GAP = 8;
 
 // ========== HELPER FUNCTIONS ==========
@@ -64,11 +63,10 @@ export default function ChatbotScreen() {
   const [inputHeight, setInputHeight] = useState(MIN_INPUT_HEIGHT);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
-  const bottomInset = Math.max(insets.bottom, 16);
-  const floatingTabOffset = FLOATING_TAB_CLEARANCE + bottomInset;
   const chatBottomPadding = inputHeight + EXTRA_SCROLL_PADDING;
-  const composerPaddingBottom = isKeyboardVisible ? KEYBOARD_GAP : bottomInset;
-  const safeAreaPadding = isKeyboardVisible ? KEYBOARD_GAP : floatingTabOffset;
+  // Tab bar height (~76px) + container padding (~20px) + safe area
+  const tabBarHeight = 76 + Math.max(insets.bottom, 20);
+  const composerPaddingBottom = isKeyboardVisible ? KEYBOARD_GAP : tabBarHeight;
 
   // Auto-scroll when keyboard shows
   useEffect(() => {
@@ -165,10 +163,7 @@ export default function ChatbotScreen() {
   );
 
   return (
-    <SafeAreaView
-      style={[styles.rootFull, { paddingBottom: safeAreaPadding }]}
-      edges={["left", "right", "bottom"]}
-    >
+    <SafeAreaView style={styles.rootFull} edges={["left", "right"]}>
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -272,7 +267,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: HORIZONTAL_PADDING,
-    paddingTop: 12,
+    paddingTop: 8,
     paddingBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: "rgba(255, 255, 255, 0.06)",
@@ -295,21 +290,21 @@ const styles = StyleSheet.create({
     color: Colors.tint,
   },
   chatListContent: {
-    paddingTop: 16,
+    paddingTop: 20,
     paddingHorizontal: HORIZONTAL_PADDING,
   },
   messageRow: {
     flexDirection: "row",
-    marginBottom: 8,
+    marginBottom: 16,
   },
   messageRowUser: {
     justifyContent: "flex-end",
   },
   messageBubble: {
     maxWidth: "82%",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    paddingBottom: 8,
+    paddingHorizontal: 18,
+    paddingVertical: 14,
+    paddingBottom: 10,
     borderRadius: 20,
     borderWidth: 1,
     shadowColor: "#000",
@@ -346,7 +341,7 @@ const styles = StyleSheet.create({
   },
   inputSection: {
     paddingHorizontal: HORIZONTAL_PADDING,
-    paddingTop: 12,
+    paddingTop: 16,
     backgroundColor: Colors.background,
     borderTopWidth: 1,
     borderTopColor: "rgba(255, 255, 255, 0.04)",
@@ -364,8 +359,8 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.12)",
-    paddingHorizontal: 18,
-    paddingVertical: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
     gap: 12,
   },
   input: {

@@ -1,7 +1,6 @@
 import { ArchGradient } from "@/components/ArchGradient";
 import { Colors } from "@/constants/theme";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Defs, LinearGradient, Path, Stop } from "react-native-svg";
 
 // 24-hour data for background chart (behind percentage)
@@ -125,7 +124,7 @@ export default function HomeScreen() {
   const percentage = 12;
 
   return (
-    <SafeAreaView style={styles.root}>
+    <View style={styles.root}>
       <ArchGradient percentage={percentage} />
 
       {/* Background chart - behind percentage (Revolut style) */}
@@ -202,7 +201,7 @@ export default function HomeScreen() {
         {/* Bottom padding */}
         <View style={{ height: 40 }} />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

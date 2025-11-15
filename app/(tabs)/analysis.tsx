@@ -3,11 +3,10 @@ import CollapsibleChartGroup from "@/components/analysis/CollapsibleChartGroup";
 import FeatureDropdown from "@/components/analysis/FeatureDropdown";
 import { Colors } from "@/constants/theme";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AnalysisScreen() {
   return (
-    <SafeAreaView style={styles.root}>
+    <View style={styles.root}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
@@ -81,7 +80,7 @@ export default function AnalysisScreen() {
 
         <FeatureDropdown />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

@@ -1,7 +1,7 @@
 /* eslint-disable import/no-named-as-default */
 import CollapsibleChartGroup from "@/components/analysis/CollapsibleChartGroup";
 import FeatureDropdown from "@/components/analysis/FeatureDropdown";
-import { Colors } from "@/constants/theme";
+import { Colors, Fonts } from "@/constants/theme";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -45,7 +45,7 @@ export default function AnalysisScreen() {
               style={{
                 fontSize: 20,
                 color: Colors.tint,
-                fontWeight: 600,
+                fontFamily: Fonts.bodySemiBold,
               }}
             >
               See which triggers, preceding symptoms, and symptoms are most
@@ -134,5 +134,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: Colors.tint,
     marginTop: 60,
+    fontFamily: Fonts.headingBold,
   },
 });

@@ -1,5 +1,5 @@
 import { ArchGradient } from "@/components/ArchGradient";
-import { Colors } from "@/constants/theme";
+import { Colors, Fonts } from "@/constants/theme";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Svg, { Defs, LinearGradient, Path, Stop } from "react-native-svg";
@@ -272,10 +272,10 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 16,
-    fontWeight: "600",
     color: Colors.tint,
     marginBottom: 16,
     letterSpacing: 0.3,
+    fontFamily: Fonts.headingBold,
   },
   triggerRow: {
     flexDirection: "row",

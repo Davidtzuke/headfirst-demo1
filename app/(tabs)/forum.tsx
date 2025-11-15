@@ -1,16 +1,18 @@
 import { Colors } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "expo-router";
 import React, { useState } from "react";
 import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text,
+  ScrollView,
+  TextInput,
+  Modal,
   Image,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
 } from "react-native";
 import {
   SafeAreaView,
@@ -204,10 +206,7 @@ function TagFilter({
             onPress={() => onSelectTag(tag)}
           >
             <Text
-              style={[
-                styles.tagChipText,
-                isSelected && styles.tagChipTextSelected,
-              ]}
+              style={[styles.tagChipText, isSelected && styles.tagChipTextSelected]}
             >
               {tag}
             </Text>
@@ -239,11 +238,9 @@ function ThreadCard({
           <Text style={styles.threadAuthorName}>{thread.authorName}</Text>
           <Text style={styles.threadTime}>{timeAgo}</Text>
         </View>
-        {thread.isNew && (
-          <View style={styles.newBadge}>
-            <Text style={styles.newBadgeText}>NEW</Text>
-          </View>
-        )}
+        {thread.isNew && <View style={styles.newBadge}>
+          <Text style={styles.newBadgeText}>NEW</Text>
+        </View>}
       </View>
 
       <Text style={styles.threadTitle}>{thread.title}</Text>
@@ -287,10 +284,7 @@ function CommentItem({ comment }: { comment: Comment }) {
 
   return (
     <View style={styles.commentItem}>
-      <Image
-        source={{ uri: comment.authorAvatar }}
-        style={styles.commentAvatar}
-      />
+      <Image source={{ uri: comment.authorAvatar }} style={styles.commentAvatar} />
       <View style={styles.commentContent}>
         <View style={styles.commentHeader}>
           <Text style={styles.commentAuthor}>{comment.authorName}</Text>
@@ -324,6 +318,7 @@ function getTimeAgo(date: Date): string {
 // ========== MAIN COMPONENT ==========
 
 export default function ForumScreen() {
+  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
   // State
@@ -434,11 +429,6 @@ export default function ForumScreen() {
       <View style={styles.rootFull}>
         <View style={[styles.header]}>
           <View style={{ width: 28 }} />
-          <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerEyebrow}>Community</Text>
-            <Text style={styles.headerTitle}>Forum</Text>
-          </View>
-          <View style={styles.headerRightSpacer} />
         </View>
 
         {/* Top search + filter controls */}
@@ -545,9 +535,7 @@ export default function ForumScreen() {
                 </View>
               </View>
 
-              <Text style={styles.threadDetailTitle}>
-                {selectedThread.title}
-              </Text>
+              <Text style={styles.threadDetailTitle}>{selectedThread.title}</Text>
               <Text style={styles.threadDetailBody}>
                 {selectedThread.content}
               </Text>
@@ -618,9 +606,7 @@ export default function ForumScreen() {
               <MaterialCommunityIcons
                 name="send"
                 size={18}
-                color={
-                  newComment.trim() ? "#0A0A24" : "rgba(255, 255, 255, 0.35)"
-                }
+                color={newComment.trim() ? "#0A0A24" : "rgba(255, 255, 255, 0.35)"}
               />
             </TouchableOpacity>
           </View>
@@ -736,43 +722,27 @@ export default function ForumScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#020003",
-  },
-  rootFull: {
-    flex: 1,
-    backgroundColor: "#020003",
-    paddingTop: 20,
+    backgroundColor: "#0A0A24",
   },
   header: {
     flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "space-between",
+    alignItems: "center",
+    justifyContent: "center",
     paddingHorizontal: 20,
     paddingBottom: 12,
+    height: 68,
+    position: "relative",
   },
   menuButton: {
     padding: 8,
-  },
-  headerTitleWrap: {
-    flex: 1,
-    alignItems: "center",
-    gap: 2,
-  },
-  headerEyebrow: {
-    fontSize: 12,
-    letterSpacing: 1,
-    color: "rgba(255, 255, 255, 0.55)",
-    textTransform: "uppercase",
+    position: "absolute",
+    left: 20,
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 21,
     fontWeight: "600",
-    color: Colors.tint,
+    color: "rgba(255, 255, 255, 0.92)",
     letterSpacing: 0.2,
-    textAlign: "center",
-  },
-  headerRightSpacer: {
-    width: 28,
   },
   searchFiltersBlock: {
     marginHorizontal: 20,
@@ -897,7 +867,7 @@ const styles = StyleSheet.create({
     color: "rgba(255, 255, 255, 0.45)",
   },
   newBadge: {
-    backgroundColor: "rgba(90, 216, 153, 0.12)",
+    backgroundColor: "rgba(0, 255, 100, 0.12)",
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 11,
@@ -905,7 +875,7 @@ const styles = StyleSheet.create({
   newBadgeText: {
     fontSize: 10,
     fontWeight: "700",
-    color: "#5ad899",
+    color: "#00D174",
   },
   threadTitle: {
     fontSize: 18,
@@ -1169,7 +1139,7 @@ const styles = StyleSheet.create({
   },
   postButton: {
     fontSize: 16,
-    color: "#5ad899",
+    color: "#5AF59D",
     fontWeight: "600",
   },
   postButtonDisabled: {

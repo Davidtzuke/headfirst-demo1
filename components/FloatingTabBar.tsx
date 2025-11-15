@@ -43,10 +43,11 @@ export function FloatingTabBar() {
   const gap = 10; // Gap between tab bar and icon button
   const tabBarWidth = screenWidth - 40 - iconButtonWidth - gap; // Account for padding, icon button, and gap
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+ 
   const menuOpacity = useSharedValue(0);
   const menuScale = useSharedValue(0.8);
   const menuTranslateY = useSharedValue(10);
+  const plusRotation = useSharedValue(0);
 
   // Determine active route
   const getActiveIndex = () => {
@@ -108,15 +109,17 @@ export function FloatingTabBar() {
   const toggleMenu = () => {
     const newState = !isMenuOpen;
     setIsMenuOpen(newState);
-
+ 
     if (newState) {
       menuOpacity.value = withTiming(1, { duration: 200 });
-      menuScale.value = withSpring(1, { damping: 15, stiffness: 300 });
-      menuTranslateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+      menuScale.value = withTiming(1, { duration: 200 });
+      menuTranslateY.value = withTiming(0, { duration: 200 });
+      plusRotation.value = withTiming(45, { duration: 200 });
     } else {
       menuOpacity.value = withTiming(0, { duration: 150 });
       menuScale.value = withTiming(0.8, { duration: 150 });
       menuTranslateY.value = withTiming(10, { duration: 150 });
+      plusRotation.value = withTiming(0, { duration: 150 });
     }
   };
 
@@ -125,6 +128,7 @@ export function FloatingTabBar() {
     menuOpacity.value = withTiming(0, { duration: 150 });
     menuScale.value = withTiming(0.8, { duration: 150 });
     menuTranslateY.value = withTiming(10, { duration: 150 });
+    plusRotation.value = withTiming(0, { duration: 150 });
   };
 
   const handleMenuButton1 = () => {
@@ -141,10 +145,12 @@ export function FloatingTabBar() {
 
   const PlusButton = () => {
     const scale = useSharedValue(1);
-    const rotation = useSharedValue(0);
 
     const buttonAnimatedStyle = useAnimatedStyle(() => ({
-      transform: [{ scale: scale.value }, { rotate: `${rotation.value}deg` }],
+      transform: [
+        { scale: scale.value },
+        { rotate: `${plusRotation.value}deg` },
+      ],
     }));
 
     return (
@@ -165,7 +171,11 @@ export function FloatingTabBar() {
         style={styles.plusButton}
       >
         <Animated.View style={[styles.plusButtonContent, buttonAnimatedStyle]}>
-          <MaterialCommunityIcons name="plus" size={24} color={Colors.icon} />
+          <MaterialCommunityIcons
+            name="plus"
+            size={24}
+            color={Colors.icon}
+          />
         </Animated.View>
       </Pressable>
     );

@@ -2,6 +2,7 @@ import { Colors, Fonts } from "@/constants/theme";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
+  Image,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
@@ -30,6 +31,17 @@ export default function LoginScreen() {
       <View style={[styles.content, { paddingTop: insets.top + 40 }]}>
         {/* Header */}
         <View style={styles.header}>
+          <Image
+            source={require("../assets/images/icon-color.png")}
+            style={{
+              maxWidth: 96,
+              width: 96,
+              maxHeight: 96,
+              height: 96,
+              resizeMode: "contain",
+            }}
+          />
+
           <Text style={styles.title}>Welcome back</Text>
           <Text style={styles.subtitle}>Sign in to continue</Text>
         </View>

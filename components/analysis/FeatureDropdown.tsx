@@ -1,5 +1,7 @@
-import { useState } from "react";
-import FeatureGraphDropdown from "./FeatureGraph";
+import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
+import Dropdown from "../Dropdown";
+import FeatureGraph from "./FeatureGraph";
 
 // --------------------------------------------
 // Utility
@@ -166,19 +168,47 @@ export const generateAllMetrics = (): Record<string, DataPoint[]> => {
   };
 };
 
+const FEATURES = [
+  { label: "Altitude", value: "altitude" },
+  { label: "Atmospheric Pressure", value: "pressure" },
+  { label: "Temperature", value: "temperature" },
+  { label: "Steps", value: "steps" },
+  { label: "Average Steps", value: "avgSteps" },
+  { label: "Screen Brightness", value: "brightness" },
+  { label: "Night Light / Blue Filter", value: "nightLight" },
+];
+
 const data = generateAllMetrics();
 
 const FeatureDropdown = () => {
+  const [open, setOpen] = useState(false);
   const [feature, setFeature] = useState<string>("steps");
+  const [items, setItems] = useState(FEATURES);
 
   return (
-    <FeatureGraphDropdown
-      title={feature.charAt(0).toUpperCase() + feature.slice(1)}
-      data={data[feature]}
-      height={300}
-      showGrid={true}
-    />
+    <View style={styles.container}>
+      <Dropdown
+        items={FEATURES}
+        value={feature}
+        onChange={setFeature}
+        placeholder="Select a feature"
+      />
+
+      <FeatureGraph
+        title={FEATURES.find((f) => f.value === feature)?.label || "Feature"}
+        data={data[feature]}
+        height={320}
+        showGrid={true}
+      />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    gap: 20,
+  },
+});
 
 export default FeatureDropdown;

@@ -139,6 +139,8 @@ export function FloatingTabBar() {
 
   const handleMenuButton2 = () => {
     closeMenu();
+
+    handleNavigation("/(tabs)/chatbot");
   };
 
   const PlusButton = () => {

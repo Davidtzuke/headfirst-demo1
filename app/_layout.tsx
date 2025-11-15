@@ -1,14 +1,14 @@
 import { Fonts } from "@/constants/theme";
 import {
-  PTSerif_400Regular,
-  PTSerif_700Bold,
-} from "@expo-google-fonts/pt-serif";
-import {
   Karla_400Regular,
   Karla_500Medium,
   Karla_600SemiBold,
   Karla_700Bold,
 } from "@expo-google-fonts/karla";
+import {
+  PTSerif_400Regular,
+  PTSerif_700Bold,
+} from "@expo-google-fonts/pt-serif";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { useEffect } from "react";

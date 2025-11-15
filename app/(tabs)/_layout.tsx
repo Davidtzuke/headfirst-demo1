@@ -15,6 +15,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { FloatingTabBar } from "../../components/FloatingTabBar";
 
 const tabs = [
   { name: "index", route: "/(tabs)/", title: "Home", icon: "home-outline" },
@@ -288,6 +289,7 @@ export default function TabsLayout() {
     <View style={{ flex: 1 }}>
       <Slot />
       <SidebarMenu />
+      <FloatingTabBar />
     </View>
   );
 }

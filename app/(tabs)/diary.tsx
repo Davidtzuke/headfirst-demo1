@@ -1,23 +1,25 @@
-import { Colors } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Slider from "@react-native-community/slider";
 import React, { useState } from "react";
 import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
-  ScrollView,
-  TextInput,
+  KeyboardAvoidingView,
   LayoutAnimation,
   Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
   UIManager,
-  KeyboardAvoidingView,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Slider from "@react-native-community/slider";
 
 // Enable LayoutAnimation on Android
-if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
+if (
+  Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
@@ -50,9 +52,11 @@ const SAMPLE_ENTRIES: DiaryEntry[] = [
     duration: { value: 6, unit: "hours" },
     remedy: {
       tried: "yes",
-      description: "Took ibuprofen and rested in a dark room. Pain subsided after 4 hours.",
+      description:
+        "Took ibuprofen and rested in a dark room. Pain subsided after 4 hours.",
     },
-    notes: "Intense migraine triggered by project deadline stress. Visual aura started around 2pm.",
+    notes:
+      "Intense migraine triggered by project deadline stress. Visual aura started around 2pm.",
   },
   {
     id: "2",
@@ -62,9 +66,11 @@ const SAMPLE_ENTRIES: DiaryEntry[] = [
     duration: { value: 1, unit: "days" },
     remedy: {
       tried: "yes",
-      description: "Applied cold compress and took prescribed medication. Helped reduce intensity.",
+      description:
+        "Applied cold compress and took prescribed medication. Helped reduce intensity.",
     },
-    notes: "Woke up with moderate pain on the right side. Likely due to irregular sleep schedule.",
+    notes:
+      "Woke up with moderate pain on the right side. Likely due to irregular sleep schedule.",
   },
   {
     id: "3",
@@ -76,7 +82,8 @@ const SAMPLE_ENTRIES: DiaryEntry[] = [
       tried: "no",
       description: "Decided to ride it out without medication this time.",
     },
-    notes: "Mild migraine after skipping morning coffee. Interesting to note the caffeine dependency.",
+    notes:
+      "Mild migraine after skipping morning coffee. Interesting to note the caffeine dependency.",
   },
 ];
 
@@ -105,14 +112,21 @@ function DiaryCreationCard({
 }) {
   const [diaryName, setDiaryName] = useState("");
   const [painLevel, setPainLevel] = useState(5);
-  const [durationUnit, setDurationUnit] = useState<"hours" | "days" | null>(null);
+  const [durationUnit, setDurationUnit] = useState<"hours" | "days" | null>(
+    null
+  );
   const [durationValue, setDurationValue] = useState("");
   const [remedyTried, setRemedyTried] = useState<"yes" | "no" | null>(null);
   const [remedyDescription, setRemedyDescription] = useState("");
   const [notes, setNotes] = useState("");
 
   const handleSave = () => {
-    if (!diaryName.trim() || !durationUnit || !durationValue || remedyTried === null) {
+    if (
+      !diaryName.trim() ||
+      !durationUnit ||
+      !durationValue ||
+      remedyTried === null
+    ) {
       return;
     }
 
@@ -141,7 +155,8 @@ function DiaryCreationCard({
     onToggle();
   };
 
-  const canSave = diaryName.trim() && durationUnit && durationValue && remedyTried !== null;
+  const canSave =
+    diaryName.trim() && durationUnit && durationValue && remedyTried !== null;
 
   return (
     <View style={styles.expandableCard}>
@@ -314,7 +329,7 @@ function DiaryCreationCard({
             <Text style={styles.fieldLabel}>Notes</Text>
             <TextInput
               style={styles.textAreaInput}
-              placeholder="Write your diary entry…"
+              placeholder="Write your diary entry..."
               placeholderTextColor="rgba(255, 255, 255, 0.35)"
               value={notes}
               onChangeText={setNotes}
@@ -329,7 +344,12 @@ function DiaryCreationCard({
             onPress={handleSave}
             disabled={!canSave}
           >
-            <Text style={[styles.saveButtonText, !canSave && styles.saveButtonTextDisabled]}>
+            <Text
+              style={[
+                styles.saveButtonText,
+                !canSave && styles.saveButtonTextDisabled,
+              ]}
+            >
               Save Diary Entry
             </Text>
           </TouchableOpacity>
@@ -351,6 +371,7 @@ function DiaryEntryCard({ entry }: { entry: DiaryEntry }) {
     <TouchableOpacity style={styles.diaryCard} activeOpacity={0.7}>
       <View style={styles.diaryCardHeader}>
         <Text style={styles.diaryCardTitle}>{entry.diaryName}</Text>
+
         <View
           style={[
             styles.painLevelChip,
@@ -358,7 +379,10 @@ function DiaryEntryCard({ entry }: { entry: DiaryEntry }) {
           ]}
         >
           <Text
-            style={[styles.painLevelChipText, { color: getPainLevelColor(entry.painLevel) }]}
+            style={[
+              styles.painLevelChipText,
+              { color: getPainLevelColor(entry.painLevel) },
+            ]}
           >
             {entry.painLevel}/10
           </Text>

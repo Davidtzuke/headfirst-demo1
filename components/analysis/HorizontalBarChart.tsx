@@ -26,7 +26,7 @@ export const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
   data,
   maxAbsValue,
 }) => {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
   const rotation = useSharedValue(expanded ? 0 : 180);
   const maxHeight = useSharedValue(expanded ? 1000 : 0);
 

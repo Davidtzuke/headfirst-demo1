@@ -7,16 +7,12 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import Svg, { Path, Defs, LinearGradient, Stop, Text as SvgText } from "react-native-svg";
+import Svg, { Path, Defs, LinearGradient, Stop } from "react-native-svg";
 
-// Placeholder data
-const BACKGROUND_PREDICTION_DATA = [45, 50, 48, 52, 55, 58, 60, 62, 65, 68, 70, 72, 75];
-const PREDICTION_24H_DATA = [
-  { time: "0h", value: 45 },
-  { time: "6h", value: 52 },
-  { time: "12h", value: 68 },
-  { time: "18h", value: 73 },
-  { time: "24h", value: 75 },
+// 24-hour data for background chart (behind percentage)
+const BACKGROUND_24H_DATA = [
+  45, 48, 50, 52, 55, 54, 58, 60, 62, 65, 63, 68,
+  70, 72, 71, 73, 75, 74, 73, 72, 71, 70, 72, 75
 ];
 
 const TOP_TRIGGERS = [
@@ -46,94 +42,65 @@ const PREVENTATIVE_SUGGESTIONS = [
   },
 ];
 
-// Mini sparkline chart component
-function MiniSparkline({ data, width = 280, height = 60 }: { data: number[], width?: number, height?: number }) {
-  const max = Math.max(...data);
-  const min = Math.min(...data);
-  const range = max - min;
+// Background chart - Revolut style behind percentage
+function BackgroundChart({ data, width = 400, height = 240 }: { data: number[], width?: number, height?: number }) {
+  const values = data;
+  const max = Math.max(...values);
+  const min = Math.min(...values);
+  const range = max - min || 1;
 
+  // Generate smooth bezier curve points
   const points = data.map((value, index) => {
     const x = (index / (data.length - 1)) * width;
     const y = height - ((value - min) / range) * height;
-    return `${x},${y}`;
-  }).join(" ");
-
-  const pathD = `M ${points} L ${width},${height} L 0,${height} Z`;
-
-  return (
-    <Svg width={width} height={height}>
-      <Defs>
-        <LinearGradient id="sparklineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <Stop offset="0%" stopColor="#4AE082" stopOpacity="0.4" />
-          <Stop offset="100%" stopColor="#4AE082" stopOpacity="0.05" />
-        </LinearGradient>
-      </Defs>
-      <Path d={pathD} fill="url(#sparklineGradient)" />
-      <Path
-        d={`M ${points}`}
-        stroke="#4AE082"
-        strokeWidth="2"
-        fill="none"
-      />
-    </Svg>
-  );
-}
-
-// 24h time series chart component
-function TimeSeriesChart({ data, width = 320, height = 150 }: { data: typeof PREDICTION_24H_DATA, width?: number, height?: number }) {
-  const values = data.map(d => d.value);
-  const max = Math.max(...values);
-  const min = Math.min(...values);
-  const range = max - min;
-
-  const chartHeight = height - 30; // Leave space for labels
-  const chartWidth = width - 40; // Leave space for padding
-
-  const points = data.map((item, index) => {
-    const x = 20 + (index / (data.length - 1)) * chartWidth;
-    const y = 10 + chartHeight - ((item.value - min) / range) * chartHeight;
-    return { x, y, time: item.time };
+    return { x, y };
   });
 
-  const pathPoints = points.map(p => `${p.x},${p.y}`).join(" ");
-  const pathD = `M ${pathPoints}`;
+  // Create smooth path using quadratic bezier curves
+  let pathD = `M ${points[0].x},${points[0].y}`;
+
+  for (let i = 0; i < points.length - 1; i++) {
+    const current = points[i];
+    const next = points[i + 1];
+    const midX = (current.x + next.x) / 2;
+    const midY = (current.y + next.y) / 2;
+
+    pathD += ` Q ${current.x},${current.y} ${midX},${midY}`;
+  }
+
+  // Complete the curve to the last point
+  const last = points[points.length - 1];
+  const secondLast = points[points.length - 2];
+  pathD += ` Q ${secondLast.x},${secondLast.y} ${last.x},${last.y}`;
+
+  // Create filled area path
+  const filledPath = `${pathD} L ${width},${height} L 0,${height} Z`;
 
   return (
     <Svg width={width} height={height}>
       <Defs>
-        <LinearGradient id="timeseriesGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <Stop offset="0%" stopColor="#4AE082" stopOpacity="0.3" />
-          <Stop offset="100%" stopColor="#4AE082" stopOpacity="0.05" />
+        <LinearGradient id="bgChartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <Stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.10" />
+          <Stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.05" />
+          <Stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.02" />
         </LinearGradient>
       </Defs>
 
-      {/* Filled area */}
+      {/* Filled gradient area */}
       <Path
-        d={`${pathD} L ${points[points.length - 1].x},${chartHeight + 10} L ${points[0].x},${chartHeight + 10} Z`}
-        fill="url(#timeseriesGradient)"
+        d={filledPath}
+        fill="url(#bgChartGradient)"
       />
 
-      {/* Line */}
+      {/* Stroke line */}
       <Path
         d={pathD}
-        stroke="#4AE082"
-        strokeWidth="3"
+        stroke="#FFFFFF"
+        strokeWidth="2"
         fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
-
-      {/* Time labels */}
-      {points.map((point, index) => (
-        <SvgText
-          key={index}
-          x={point.x}
-          y={height - 5}
-          fill="#9BA1A6"
-          fontSize="10"
-          textAnchor="middle"
-        >
-          {point.time}
-        </SvgText>
-      ))}
     </Svg>
   );
 }
@@ -141,7 +108,7 @@ function TimeSeriesChart({ data, width = 320, height = 150 }: { data: typeof PRE
 export default function HomeScreen() {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
-  const percentage = 75;
+  const percentage = 100;
 
   return (
     <SafeAreaView style={styles.root}>
@@ -157,6 +124,11 @@ export default function HomeScreen() {
 
       <ArchGradient percentage={percentage} />
 
+      {/* Background chart - behind percentage (Revolut style) */}
+      <View style={styles.backgroundChartContainer}>
+        <BackgroundChart data={BACKGROUND_24H_DATA} width={400} height={60} />
+      </View>
+
       {/* Prediction percentage under the arch */}
       <View style={styles.percentageContainer}>
         <Text style={styles.percentageText}>{percentage}%</Text>
@@ -168,23 +140,7 @@ export default function HomeScreen() {
         contentContainerStyle={styles.scrollContentContainer}
         showsVerticalScrollIndicator={false}
       >
-        {/* 1. Background prediction time series */}
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Background prediction time series</Text>
-          <View style={styles.chartContainer}>
-            <MiniSparkline data={BACKGROUND_PREDICTION_DATA} width={280} height={60} />
-          </View>
-        </View>
-
-        {/* 2. Prediction percentage - 24h */}
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Prediction % (last 24h)</Text>
-          <View style={styles.chartContainer}>
-            <TimeSeriesChart data={PREDICTION_24H_DATA} width={320} height={150} />
-          </View>
-        </View>
-
-        {/* 3. Top 3 trigger features */}
+        {/* Top 3 trigger features */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Top 3 trigger features now</Text>
           {TOP_TRIGGERS.map((trigger, index) => (
@@ -242,9 +198,21 @@ const styles = StyleSheet.create({
     zIndex: 10,
     padding: 8,
   },
+  backgroundChartContainer: {
+    position: "absolute",
+    top: 100,
+    left: 0,
+    right: 0,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    zIndex: 1,
+    opacity: 0.7,
+    overflow: "hidden",
+  },
   percentageContainer: {
     position: "absolute",
-    top: 230,
+    top: 200,
     left: 0,
     right: 0,
     alignItems: "center",
@@ -258,7 +226,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flex: 1,
-    marginTop: 310,
+    marginTop: 250,
   },
   scrollContentContainer: {
     paddingHorizontal: 20,
@@ -278,10 +246,6 @@ const styles = StyleSheet.create({
     color: Colors.tint,
     marginBottom: 16,
     letterSpacing: 0.3,
-  },
-  chartContainer: {
-    alignItems: "center",
-    paddingVertical: 10,
   },
   triggerRow: {
     flexDirection: "row",

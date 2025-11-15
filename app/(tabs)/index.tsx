@@ -108,7 +108,7 @@ function BackgroundChart({ data, width = 400, height = 240 }: { data: number[], 
 export default function HomeScreen() {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
-  const percentage = 100;
+  const percentage = 12;
 
   return (
     <SafeAreaView style={styles.root}>

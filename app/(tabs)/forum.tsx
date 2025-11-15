@@ -437,33 +437,38 @@ export default function ForumScreen() {
           >
             <MaterialCommunityIcons name="menu" size={21} color="rgba(255, 255, 255, 0.92)" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Community Forum</Text>
-          <View style={{ width: 28 }} />
+          <View style={styles.headerTitleWrap}>
+            <Text style={styles.headerEyebrow}>Community</Text>
+            <Text style={styles.headerTitle}>Forum</Text>
+          </View>
+          <View style={styles.headerRightSpacer} />
         </View>
 
-        {/* Search Bar */}
-        <View style={styles.searchContainer}>
-          <MaterialCommunityIcons
-            name="magnify"
-            size={17}
-            color="rgba(255, 255, 255, 0.5)"
-            style={styles.searchIcon}
-          />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search discussions..."
-            placeholderTextColor="rgba(255, 255, 255, 0.35)"
-            value={searchQuery}
-            onChangeText={setSearchQuery}
+        {/* Top search + filter controls */}
+        <View style={styles.searchFiltersBlock}>
+          <View style={styles.searchContainer}>
+            <MaterialCommunityIcons
+              name="magnify"
+              size={17}
+              color="rgba(255, 255, 255, 0.5)"
+              style={styles.searchIcon}
+            />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search discussions..."
+              placeholderTextColor="rgba(255, 255, 255, 0.35)"
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
+          </View>
+
+          {/* Tag Filters */}
+          <TagFilter
+            tags={TAGS}
+            selectedTag={selectedTag}
+            onSelectTag={setSelectedTag}
           />
         </View>
-
-        {/* Tag Filters */}
-        <TagFilter
-          tags={TAGS}
-          selectedTag={selectedTag}
-          onSelectTag={setSelectedTag}
-        />
 
         {/* Thread List */}
         <ScrollView
@@ -540,7 +545,7 @@ export default function ForumScreen() {
               </View>
 
               <Text style={styles.threadDetailTitle}>{selectedThread.title}</Text>
-              <Text style={styles.threadDetailContent}>
+              <Text style={styles.threadDetailBody}>
                 {selectedThread.content}
               </Text>
 
@@ -628,28 +633,22 @@ export default function ForumScreen() {
           behavior={Platform.OS === "ios" ? "padding" : undefined}
         >
           {/* Header */}
-          <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
-            <TouchableOpacity
-              style={styles.menuButton}
-              onPress={handleBackToFeed}
-            >
-              <MaterialCommunityIcons
-                name="close"
-                size={21}
-                color="rgba(255, 255, 255, 0.92)"
-              />
+          <View style={[styles.createHeader, { paddingTop: insets.top + 12 }]}>
+            <TouchableOpacity onPress={handleBackToFeed}>
+              <Text style={styles.cancelButton}>Cancel</Text>
             </TouchableOpacity>
-            <Text style={styles.headerTitle}>Create Thread</Text>
+
+            <Text style={styles.createHeaderTitle}>New Thread</Text>
+
             <TouchableOpacity
-              style={styles.menuButton}
               onPress={handleCreateThread}
               disabled={!newThreadTitle.trim() || !newThreadContent.trim()}
             >
               <Text
                 style={[
-                  styles.postButtonText,
+                  styles.postButton,
                   (!newThreadTitle.trim() || !newThreadContent.trim()) &&
-                    styles.postButtonTextDisabled,
+                    styles.postButtonDisabled,
                 ]}
               >
                 Post
@@ -736,34 +735,48 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
     paddingHorizontal: 20,
     paddingBottom: 12,
-    height: 68,
-    position: "relative",
   },
   menuButton: {
     padding: 8,
-    position: "absolute",
-    left: 20,
+  },
+  headerTitleWrap: {
+    flex: 1,
+    alignItems: "center",
+    gap: 2,
+  },
+  headerEyebrow: {
+    fontSize: 12,
+    letterSpacing: 1,
+    color: "rgba(255, 255, 255, 0.55)",
+    textTransform: "uppercase",
   },
   headerTitle: {
-    fontSize: 21,
+    fontSize: 24,
     fontWeight: "600",
-    color: "rgba(255, 255, 255, 0.92)",
+    color: Colors.tint,
     letterSpacing: 0.2,
+    textAlign: "center",
+  },
+  headerRightSpacer: {
+    width: 28,
+  },
+  searchFiltersBlock: {
+    marginHorizontal: 20,
+    marginBottom: 12,
   },
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.06)",
-    borderRadius: 18,
-    marginHorizontal: 20,
-    marginBottom: 12,
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    borderRadius: 16,
     paddingHorizontal: 14,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.08)",
+    height: 46,
   },
   searchIcon: {
     marginRight: 10,
@@ -777,24 +790,25 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   tagFilterContainer: {
-    marginTop: 0,
-    marginBottom: 12,
-    paddingVertical: 0,
+    paddingVertical: 4,
+    marginTop: 10,
+    width: "100%",
   },
   tagFilterContent: {
-    paddingHorizontal: 20,
-    paddingVertical: 0,
+    flexGrow: 0,
+    alignItems: "center",
+    paddingHorizontal: 2,
   },
   tagChip: {
     backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderRadius: 18,
     paddingHorizontal: 16,
-    paddingVertical: 7,
+    paddingVertical: 5,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.08)",
     marginRight: 10,
     marginVertical: 0,
-    height: 36,
+    height: 32,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -952,7 +966,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     lineHeight: 28,
   },
-  threadDetailContent: {
+  threadDetailBody: {
     fontSize: 15,
     color: "rgba(255, 255, 255, 0.75)",
     lineHeight: 22,
@@ -1130,4 +1144,33 @@ const styles = StyleSheet.create({
   postButtonTextDisabled: {
     color: "rgba(255, 255, 255, 0.35)",
   },
+  createHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+  },
+  cancelButton: {
+    fontSize: 16,
+    color: "rgba(255, 255, 255, 0.7)",
+  },
+  postButton: {
+    fontSize: 16,
+    color: "#5AF59D",
+    fontWeight: "600",
+  },
+  postButtonDisabled: {
+    color: "rgba(255, 255, 255, 0.35)",
+  },
+  createHeaderTitle: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    fontSize: 16,
+    color: "rgba(255, 255, 255, 0.92)",
+    fontWeight: "600",
+  },
 });
+"dasdasd"

@@ -40,7 +40,7 @@ export default function DrawerLayout() {
           title: "Analysis",
           drawerIcon: ({ color }: { color: string }) => (
             <MaterialCommunityIcons
-              name="home-outline"
+              name="chart-box-outline"
               color={color}
               size={24}
             />

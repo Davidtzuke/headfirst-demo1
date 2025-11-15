@@ -443,20 +443,28 @@ export default function ForumScreen() {
 
         {/* Top search + filter controls */}
         <View style={styles.searchFiltersBlock}>
-          <View style={styles.searchContainer}>
-            <MaterialCommunityIcons
-              name="magnify"
-              size={17}
-              color="rgba(255, 255, 255, 0.5)"
-              style={styles.searchIcon}
-            />
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Search discussions..."
-              placeholderTextColor="rgba(255, 255, 255, 0.35)"
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-            />
+          <View style={styles.searchRow}>
+            <View style={styles.searchContainer}>
+              <MaterialCommunityIcons
+                name="magnify"
+                size={17}
+                color="rgba(255, 255, 255, 0.5)"
+                style={styles.searchIcon}
+              />
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search discussions..."
+                placeholderTextColor="rgba(255, 255, 255, 0.35)"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.createButtonInline}
+              onPress={() => setView("create")}
+            >
+              <MaterialCommunityIcons name="plus" size={18} color="rgba(255, 255, 255, 0.92)" />
+            </TouchableOpacity>
           </View>
 
           {/* Tag Filters */}
@@ -486,14 +494,6 @@ export default function ForumScreen() {
             />
           ))}
         </ScrollView>
-
-        {/* Floating Create Button */}
-        <TouchableOpacity
-          style={styles.createButton}
-          onPress={() => setView("create")}
-        >
-          <MaterialCommunityIcons name="plus" size={22} color="#0A0A24" />
-        </TouchableOpacity>
       </View>
     );
   }
@@ -778,7 +778,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 12,
   },
+  searchRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
   searchContainer: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "rgba(255, 255, 255, 0.05)",
@@ -787,6 +793,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.08)",
     height: 46,
+  },
+  createButtonInline: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.08)",
+    height: 46,
+    width: 46,
   },
   searchIcon: {
     marginRight: 10,
@@ -933,22 +950,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "rgba(255, 255, 255, 0.55)",
     fontWeight: "500",
-  },
-  createButton: {
-    position: "absolute",
-    bottom: 26,
-    right: 22,
-    width: 54,
-    height: 54,
-    borderRadius: 27,
-    backgroundColor: "#FFFFFF",
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.28,
-    shadowRadius: 10,
-    elevation: 8,
   },
   threadDetailScroll: {
     flex: 1,

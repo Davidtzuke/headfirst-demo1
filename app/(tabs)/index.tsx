@@ -1,10 +1,27 @@
 import { Colors } from "@/constants/theme";
-import { StyleSheet, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 export default function HomeScreen() {
+  const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
+
   return (
     <SafeAreaView style={styles.root}>
+      <TouchableOpacity
+        style={[styles.menuButton, { top: insets.top + 16 }]}
+        onPress={() => {
+          // @ts-ignore - drawer navigation type
+          navigation.openDrawer();
+        }}
+      >
+        <MaterialCommunityIcons name="menu" size={28} color={Colors.tint} />
+      </TouchableOpacity>
       <Text style={styles.title}>Welcome back, user.</Text>
     </SafeAreaView>
   );
@@ -16,8 +33,15 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     padding: 32,
   },
+  menuButton: {
+    position: "absolute",
+    left: 16,
+    zIndex: 10,
+    padding: 8,
+  },
   title: {
     fontSize: 32,
     color: Colors.tint,
+    marginTop: 60,
   },
 });

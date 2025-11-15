@@ -1,39 +1,38 @@
-import { Tabs } from "expo-router";
+import { Drawer } from "expo-router/drawer";
 import React from "react";
 
-import { HapticTab } from "@/components/HapticTab";
 import { Colors } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function TabLayout() {
+export default function DrawerLayout() {
   return (
-    <Tabs
+    <Drawer
       screenOptions={{
-        tabBarActiveTintColor: Colors.tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarStyle: {
+        drawerActiveTintColor: Colors.tint,
+        drawerInactiveTintColor: Colors.tabIconDefault,
+        drawerStyle: {
           backgroundColor: Colors.tabBarBackground,
-          borderTopWidth: 0,
-          borderTopColor: "transparent",
-          elevation: 0,
-          shadowOpacity: 0,
+          width: 280,
+        },
+        drawerContentStyle: {
+          backgroundColor: Colors.tabBarBackground,
         },
       }}
     >
-      <Tabs.Screen
+      <Drawer.Screen
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => (
+          drawerIcon: ({ color }: { color: string }) => (
             <MaterialCommunityIcons
               name="home-outline"
               color={color}
-              size={28}
+              size={24}
             />
           ),
         }}
       />
-    </Tabs>
+    </Drawer>
   );
 }

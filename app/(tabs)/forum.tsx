@@ -1,18 +1,16 @@
 import { Colors } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "expo-router";
 import React, { useState } from "react";
 import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
-  ScrollView,
-  TextInput,
-  Modal,
   Image,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import {
   SafeAreaView,
@@ -206,7 +204,10 @@ function TagFilter({
             onPress={() => onSelectTag(tag)}
           >
             <Text
-              style={[styles.tagChipText, isSelected && styles.tagChipTextSelected]}
+              style={[
+                styles.tagChipText,
+                isSelected && styles.tagChipTextSelected,
+              ]}
             >
               {tag}
             </Text>
@@ -238,9 +239,11 @@ function ThreadCard({
           <Text style={styles.threadAuthorName}>{thread.authorName}</Text>
           <Text style={styles.threadTime}>{timeAgo}</Text>
         </View>
-        {thread.isNew && <View style={styles.newBadge}>
-          <Text style={styles.newBadgeText}>NEW</Text>
-        </View>}
+        {thread.isNew && (
+          <View style={styles.newBadge}>
+            <Text style={styles.newBadgeText}>NEW</Text>
+          </View>
+        )}
       </View>
 
       <Text style={styles.threadTitle}>{thread.title}</Text>
@@ -284,7 +287,10 @@ function CommentItem({ comment }: { comment: Comment }) {
 
   return (
     <View style={styles.commentItem}>
-      <Image source={{ uri: comment.authorAvatar }} style={styles.commentAvatar} />
+      <Image
+        source={{ uri: comment.authorAvatar }}
+        style={styles.commentAvatar}
+      />
       <View style={styles.commentContent}>
         <View style={styles.commentHeader}>
           <Text style={styles.commentAuthor}>{comment.authorName}</Text>
@@ -318,7 +324,6 @@ function getTimeAgo(date: Date): string {
 // ========== MAIN COMPONENT ==========
 
 export default function ForumScreen() {
-  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
   // State
@@ -536,7 +541,9 @@ export default function ForumScreen() {
                 </View>
               </View>
 
-              <Text style={styles.threadDetailTitle}>{selectedThread.title}</Text>
+              <Text style={styles.threadDetailTitle}>
+                {selectedThread.title}
+              </Text>
               <Text style={styles.threadDetailBody}>
                 {selectedThread.content}
               </Text>
@@ -607,7 +614,9 @@ export default function ForumScreen() {
               <MaterialCommunityIcons
                 name="send"
                 size={18}
-                color={newComment.trim() ? "#0A0A24" : "rgba(255, 255, 255, 0.35)"}
+                color={
+                  newComment.trim() ? "#0A0A24" : "rgba(255, 255, 255, 0.35)"
+                }
               />
             </TouchableOpacity>
           </View>
@@ -1170,4 +1179,3 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 });
-"dasdasd"

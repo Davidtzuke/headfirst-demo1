@@ -1,24 +1,34 @@
 import { ArchGradient } from "@/components/ArchGradient";
 import { Colors } from "@/constants/theme";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "expo-router";
-import { StyleSheet, TouchableOpacity, View, Text, ScrollView } from "react-native";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
-import Svg, { Path, Defs, LinearGradient, Stop } from "react-native-svg";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Svg, { Defs, LinearGradient, Path, Stop } from "react-native-svg";
 
 // 24-hour data for background chart (behind percentage)
 const BACKGROUND_24H_DATA = [
-  45, 48, 50, 52, 55, 54, 58, 60, 62, 65, 63, 68,
-  70, 72, 71, 73, 75, 74, 73, 72, 71, 70, 72, 75
+  45, 48, 50, 52, 55, 54, 58, 60, 62, 65, 63, 68, 70, 72, 71, 73, 75, 74, 73,
+  72, 71, 70, 72, 75,
 ];
 
 const TOP_TRIGGERS = [
-  { featureName: "Sleep Quality", currentValue: "4.2 hrs", influence: "+0.21", positive: true },
-  { featureName: "Screen Time", currentValue: "6.8 hrs", influence: "+0.18", positive: true },
-  { featureName: "Caffeine Intake", currentValue: "3 cups", influence: "+0.15", positive: true },
+  {
+    featureName: "Sleep Quality",
+    currentValue: "4.2 hrs",
+    influence: "+0.21",
+    positive: true,
+  },
+  {
+    featureName: "Screen Time",
+    currentValue: "6.8 hrs",
+    influence: "+0.18",
+    positive: true,
+  },
+  {
+    featureName: "Caffeine Intake",
+    currentValue: "3 cups",
+    influence: "+0.15",
+    positive: true,
+  },
 ];
 
 const PREVENTATIVE_SUGGESTIONS = [
@@ -26,24 +36,33 @@ const PREVENTATIVE_SUGGESTIONS = [
     metricName: "Sleep Duration",
     direction: "increase",
     delta: "+1.5 hrs",
-    explanation: "Increasing sleep to 7.5 hours can reduce migraine risk by 15%"
+    explanation:
+      "Increasing sleep to 7.5 hours can reduce migraine risk by 15%",
   },
   {
     metricName: "Screen Time",
     direction: "decrease",
     delta: "-2 hrs",
-    explanation: "Reducing screen time can lower eye strain-related triggers"
+    explanation: "Reducing screen time can lower eye strain-related triggers",
   },
   {
     metricName: "Water Intake",
     direction: "increase",
     delta: "+500ml",
-    explanation: "Better hydration helps prevent dehydration-induced migraines"
+    explanation: "Better hydration helps prevent dehydration-induced migraines",
   },
 ];
 
 // Background chart - Revolut style behind percentage
-function BackgroundChart({ data, width = 400, height = 240 }: { data: number[], width?: number, height?: number }) {
+function BackgroundChart({
+  data,
+  width = 400,
+  height = 240,
+}: {
+  data: number[];
+  width?: number;
+  height?: number;
+}) {
   const values = data;
   const max = Math.max(...values);
   const min = Math.min(...values);
@@ -87,10 +106,7 @@ function BackgroundChart({ data, width = 400, height = 240 }: { data: number[], 
       </Defs>
 
       {/* Filled gradient area */}
-      <Path
-        d={filledPath}
-        fill="url(#bgChartGradient)"
-      />
+      <Path d={filledPath} fill="url(#bgChartGradient)" />
 
       {/* Stroke line */}
       <Path
@@ -106,13 +122,10 @@ function BackgroundChart({ data, width = 400, height = 240 }: { data: number[], 
 }
 
 export default function HomeScreen() {
-  const navigation = useNavigation();
-  const insets = useSafeAreaInsets();
   const percentage = 12;
 
   return (
     <SafeAreaView style={styles.root}>
-
       <ArchGradient percentage={percentage} />
 
       {/* Background chart - behind percentage (Revolut style) */}
@@ -141,10 +154,12 @@ export default function HomeScreen() {
                 <Text style={styles.triggerName}>{trigger.featureName}</Text>
                 <Text style={styles.triggerValue}>{trigger.currentValue}</Text>
               </View>
-              <Text style={[
-                styles.triggerInfluence,
-                { color: trigger.positive ? "#5ad899" : "#ef4f49" }
-              ]}>
+              <Text
+                style={[
+                  styles.triggerInfluence,
+                  { color: trigger.positive ? "#5ad899" : "#ef4f49" },
+                ]}
+              >
                 {trigger.influence}
               </Text>
             </View>
@@ -157,17 +172,29 @@ export default function HomeScreen() {
           {PREVENTATIVE_SUGGESTIONS.map((suggestion, index) => (
             <View key={index} style={styles.suggestionCard}>
               <View style={styles.suggestionHeader}>
-                <Text style={styles.suggestionMetric}>{suggestion.metricName}</Text>
+                <Text style={styles.suggestionMetric}>
+                  {suggestion.metricName}
+                </Text>
                 <View style={styles.suggestionBadge}>
-                  <Text style={[
-                    styles.suggestionDirection,
-                    { color: suggestion.direction === "increase" ? "#5ad899" : "#f7d36c" }
-                  ]}>
-                    {suggestion.direction === "increase" ? "↑" : "↓"} {suggestion.delta}
+                  <Text
+                    style={[
+                      styles.suggestionDirection,
+                      {
+                        color:
+                          suggestion.direction === "increase"
+                            ? "#5ad899"
+                            : "#f7d36c",
+                      },
+                    ]}
+                  >
+                    {suggestion.direction === "increase" ? "↑" : "↓"}{" "}
+                    {suggestion.delta}
                   </Text>
                 </View>
               </View>
-              <Text style={styles.suggestionExplanation}>{suggestion.explanation}</Text>
+              <Text style={styles.suggestionExplanation}>
+                {suggestion.explanation}
+              </Text>
             </View>
           ))}
         </View>

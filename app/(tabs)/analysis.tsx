@@ -2,24 +2,13 @@
 import CollapsibleChartGroup from "@/components/analysis/CollapsibleChartGroup";
 import FeatureDropdown from "@/components/analysis/FeatureDropdown";
 import { Colors } from "@/constants/theme";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "expo-router";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AnalysisScreen() {
-  const navigation = useNavigation();
-
   return (
     <SafeAreaView style={styles.root}>
       <ScrollView showsVerticalScrollIndicator={false}>
-
         <View
           style={{
             paddingVertical: 32,

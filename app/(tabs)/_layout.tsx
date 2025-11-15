@@ -1,23 +1,36 @@
-import { Slot } from "expo-router";
-import React, { useState, useEffect } from "react";
-import { Platform, View, Dimensions, TouchableOpacity, Text } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { router, Slot, usePathname } from "expo-router";
+import React, { useEffect, useState } from "react";
+import {
+  Dimensions,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Animated, {
-  useSharedValue,
   useAnimatedStyle,
+  useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { router, usePathname } from "expo-router";
-
-import { Colors } from "@/constants/theme";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const tabs = [
   { name: "index", route: "/(tabs)/", title: "Home", icon: "home-outline" },
-  { name: "analysis", route: "/(tabs)/analysis", title: "Analysis", icon: "chart-box-outline" },
-  { name: "forum", route: "/(tabs)/forum", title: "Forum", icon: "forum-outline" },
+  {
+    name: "analysis",
+    route: "/(tabs)/analysis",
+    title: "Analysis",
+    icon: "chart-box-outline",
+  },
+  {
+    name: "forum",
+    route: "/(tabs)/forum",
+    title: "Forum",
+    icon: "forum-outline",
+  },
 ];
 
 // Custom Tab Bar Component
@@ -51,10 +64,8 @@ function CustomTabBar() {
       stiffness: 300,
       mass: 1,
       overshootClamping: false,
-      restDisplacementThreshold: 0.01,
-      restSpeedThreshold: 0.01,
     });
-  }, [currentTab, tabWidth]);
+  }, [currentTab, tabWidth, translateX]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value + tabWidth / 2 - 32 }],
@@ -85,7 +96,7 @@ function CustomTabBar() {
             "rgba(0, 0, 0, 0.2)",
             "rgba(0, 0, 0, 0.4)",
             "rgba(0, 0, 0, 0.7)",
-            "rgba(0, 0, 0, 0.9)"
+            "rgba(0, 0, 0, 0.9)",
           ]}
           style={{ flex: 1 }}
           locations={[0, 0.1, 0.2, 0.35, 0.5, 0.7, 0.85, 1]}
@@ -184,7 +195,7 @@ function CustomTabBar() {
                 }}
                 onPress={() => {
                   setCurrentTab(index);
-                  router.push(tab.route);
+                  router.push(tab.route as any);
                 }}
               >
                 <MaterialCommunityIcons

@@ -432,7 +432,7 @@ export default function ForumScreen() {
   if (view === "feed") {
     return (
       <View style={styles.rootFull}>
-        <View style={[styles.header, { paddingTop: insets.top - 10 }]}>
+        <View style={[styles.header]}>
           <View style={{ width: 28 }} />
           <View style={styles.headerTitleWrap}>
             <Text style={styles.headerEyebrow}>Community</Text>
@@ -473,8 +473,7 @@ export default function ForumScreen() {
           contentContainerStyle={[
             styles.threadListContent,
             {
-              paddingBottom:
-                76 + Math.max(insets.bottom, 20) + 20, // Tab bar height + extra padding
+              paddingBottom: 76 + Math.max(insets.bottom, 20) + 20, // Tab bar height + extra padding
             },
           ]}
           showsVerticalScrollIndicator={false}
@@ -502,14 +501,14 @@ export default function ForumScreen() {
   // Thread Detail View
   if (view === "thread" && selectedThread) {
     return (
-      <SafeAreaView style={styles.root}>
+      <View style={styles.rootFull}>
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
         >
           {/* Header */}
-          <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
+          <View style={styles.header}>
             <TouchableOpacity
               style={styles.menuButton}
               onPress={handleBackToFeed}
@@ -626,7 +625,7 @@ export default function ForumScreen() {
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
-      </SafeAreaView>
+      </View>
     );
   }
 
@@ -956,6 +955,7 @@ const styles = StyleSheet.create({
   },
   threadDetailContent: {
     paddingHorizontal: 20,
+    paddingTop: 8,
   },
   threadDetailCard: {
     backgroundColor: "rgba(255, 255, 255, 0.03)",

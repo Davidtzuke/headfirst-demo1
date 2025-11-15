@@ -67,25 +67,21 @@ export function FloatingTabBar() {
       transform: [{ scale: scale.value }],
     }));
 
-    const handlePressIn = () => {
-      scale.value = withSpring(0.9, {
-        damping: 15,
-        stiffness: 300,
-      });
-    };
-
-    const handlePressOut = () => {
-      scale.value = withSpring(1, {
-        damping: 15,
-        stiffness: 300,
-      });
-    };
-
     return (
       <Pressable
         onPress={() => handleNavigation(tab.route)}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
+        onPressIn={() => {
+          scale.value = withSpring(0.85, {
+            damping: 15,
+            stiffness: 300,
+          });
+        }}
+        onPressOut={() => {
+          scale.value = withSpring(1, {
+            damping: 15,
+            stiffness: 300,
+          });
+        }}
         style={styles.tabButton}
       >
         <Animated.View style={[styles.tabButtonContent, animatedStyle]}>

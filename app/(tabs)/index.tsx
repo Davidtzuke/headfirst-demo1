@@ -112,15 +112,6 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.root}>
-      <TouchableOpacity
-        style={[styles.menuButton, { top: insets.top + 16 }]}
-        onPress={() => {
-          // @ts-ignore - drawer navigation type
-          navigation.openDrawer();
-        }}
-      >
-        <MaterialCommunityIcons name="menu" size={28} color={Colors.tint} />
-      </TouchableOpacity>
 
       <ArchGradient percentage={percentage} />
 
@@ -152,7 +143,7 @@ export default function HomeScreen() {
               </View>
               <Text style={[
                 styles.triggerInfluence,
-                { color: trigger.positive ? "#4AE082" : "#FF0000" }
+                { color: trigger.positive ? "#5ad899" : "#ef4f49" }
               ]}>
                 {trigger.influence}
               </Text>
@@ -170,7 +161,7 @@ export default function HomeScreen() {
                 <View style={styles.suggestionBadge}>
                   <Text style={[
                     styles.suggestionDirection,
-                    { color: suggestion.direction === "increase" ? "#4AE082" : "#FF9500" }
+                    { color: suggestion.direction === "increase" ? "#5ad899" : "#f7d36c" }
                   ]}>
                     {suggestion.direction === "increase" ? "↑" : "↓"} {suggestion.delta}
                   </Text>

@@ -426,17 +426,9 @@ export default function ForumScreen() {
   // Forum Feed View
   if (view === "feed") {
     return (
-      <SafeAreaView style={styles.root}>
-        <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
-          <TouchableOpacity
-            style={styles.menuButton}
-            onPress={() => {
-              // @ts-ignore
-              navigation.openDrawer();
-            }}
-          >
-            <MaterialCommunityIcons name="menu" size={21} color="rgba(255, 255, 255, 0.92)" />
-          </TouchableOpacity>
+      <View style={styles.rootFull}>
+        <View style={[styles.header, { paddingTop: insets.top - 10 }]}>
+          <View style={{ width: 28 }} />
           <View style={styles.headerTitleWrap}>
             <Text style={styles.headerEyebrow}>Community</Text>
             <Text style={styles.headerTitle}>Forum</Text>
@@ -493,7 +485,7 @@ export default function ForumScreen() {
         >
           <MaterialCommunityIcons name="plus" size={22} color="#0A0A24" />
         </TouchableOpacity>
-      </SafeAreaView>
+      </View>
     );
   }
 
@@ -731,7 +723,12 @@ export default function ForumScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#0A0A24",
+    backgroundColor: "#020003",
+  },
+  rootFull: {
+    flex: 1,
+    backgroundColor: "#020003",
+    paddingTop: 20,
   },
   header: {
     flexDirection: "row",
@@ -870,7 +867,7 @@ const styles = StyleSheet.create({
     color: "rgba(255, 255, 255, 0.45)",
   },
   newBadge: {
-    backgroundColor: "rgba(0, 255, 100, 0.12)",
+    backgroundColor: "rgba(90, 216, 153, 0.12)",
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 11,
@@ -878,7 +875,7 @@ const styles = StyleSheet.create({
   newBadgeText: {
     fontSize: 10,
     fontWeight: "700",
-    color: "#00D174",
+    color: "#5ad899",
   },
   threadTitle: {
     fontSize: 18,
@@ -1157,7 +1154,7 @@ const styles = StyleSheet.create({
   },
   postButton: {
     fontSize: 16,
-    color: "#5AF59D",
+    color: "#5ad899",
     fontWeight: "600",
   },
   postButtonDisabled: {

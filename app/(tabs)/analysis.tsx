@@ -19,15 +19,6 @@ export default function AnalysisScreen() {
   return (
     <SafeAreaView style={styles.root}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <TouchableOpacity
-          style={[styles.menuButton]}
-          onPress={() => {
-            // @ts-ignore - drawer navigation type
-            navigation.openDrawer();
-          }}
-        >
-          <MaterialCommunityIcons name="menu" size={28} color={Colors.tint} />
-        </TouchableOpacity>
 
         <View
           style={{

@@ -1,6 +1,7 @@
 import { ArchGradient } from "@/components/ArchGradient";
 import { Colors } from "@/constants/theme";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Svg, { Defs, LinearGradient, Path, Stop } from "react-native-svg";
 
 // 24-hour data for background chart (behind percentage)
@@ -122,6 +123,9 @@ function BackgroundChart({
 
 export default function HomeScreen() {
   const percentage = 12;
+  const insets = useSafeAreaInsets();
+  // Tab bar height: ~76px (60 minHeight + 16 padding) + bottom safe area
+  const tabBarHeight = 76 + Math.max(insets.bottom, 20);
 
   return (
     <View style={styles.root}>
@@ -141,7 +145,10 @@ export default function HomeScreen() {
       {/* Scrollable analytics content */}
       <ScrollView
         style={styles.scrollContent}
-        contentContainerStyle={styles.scrollContentContainer}
+        contentContainerStyle={[
+          styles.scrollContentContainer,
+          { paddingBottom: tabBarHeight + 20 },
+        ]}
         showsVerticalScrollIndicator={false}
       >
         {/* Top 3 trigger features */}
@@ -198,8 +205,6 @@ export default function HomeScreen() {
           ))}
         </View>
 
-        {/* Bottom padding */}
-        <View style={{ height: 40 }} />
       </ScrollView>
     </View>
   );

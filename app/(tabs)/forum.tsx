@@ -470,7 +470,13 @@ export default function ForumScreen() {
         {/* Thread List */}
         <ScrollView
           style={styles.threadList}
-          contentContainerStyle={styles.threadListContent}
+          contentContainerStyle={[
+            styles.threadListContent,
+            {
+              paddingBottom:
+                76 + Math.max(insets.bottom, 20) + 20, // Tab bar height + extra padding
+            },
+          ]}
           showsVerticalScrollIndicator={false}
         >
           {filteredThreads.map((thread) => (
@@ -480,7 +486,6 @@ export default function ForumScreen() {
               onPress={() => handleThreadPress(thread)}
             />
           ))}
-          <View style={{ height: 100 }} />
         </ScrollView>
 
         {/* Floating Create Button */}

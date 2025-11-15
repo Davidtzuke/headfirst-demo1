@@ -3,11 +3,19 @@ import CollapsibleChartGroup from "@/components/analysis/CollapsibleChartGroup";
 import FeatureDropdown from "@/components/analysis/FeatureDropdown";
 import { Colors } from "@/constants/theme";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function AnalysisScreen() {
+  const insets = useSafeAreaInsets();
+  // Tab bar height: ~76px (60 minHeight + 16 padding) + bottom safe area
+  const tabBarHeight = 76 + Math.max(insets.bottom, 20);
+
   return (
     <View style={styles.root}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: tabBarHeight + 20 }}
+      >
         <View
           style={{
             paddingVertical: 32,

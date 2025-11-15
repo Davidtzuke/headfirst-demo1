@@ -12,12 +12,12 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function HomeScreen() {
+export default function AnalysisScreen() {
   const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.root}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <TouchableOpacity
           style={[styles.menuButton]}
           onPress={() => {
@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
     paddingHorizontal: 20,
-    paddingVertical: 32,
   },
   menuButton: {},
   title: {

@@ -25,31 +25,19 @@ export const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
   title,
   data,
   maxAbsValue,
-  isExpanded = false,
-  onToggle,
 }) => {
-  const [shouldRender, setShouldRender] = useState(isExpanded);
-  const rotation = useSharedValue(isExpanded ? 0 : 180);
-  const maxHeight = useSharedValue(isExpanded ? 1000 : 0);
-
-  useEffect(() => {
-    if (isExpanded) {
-      setShouldRender(true);
-    } else {
-      // Delay unmounting to allow collapse animation to play
-      const timer = setTimeout(() => setShouldRender(false), 300);
-      return () => clearTimeout(timer);
-    }
-  }, [isExpanded]);
-
-  useEffect(() => {
-    rotation.value = withTiming(isExpanded ? 0 : 180, { duration: 300 });
-    maxHeight.value = withTiming(isExpanded ? 1000 : 0, { duration: 300 });
-  }, [isExpanded, rotation, maxHeight]);
+  const [expanded, setExpanded] = useState(false);
+  const rotation = useSharedValue(expanded ? 0 : 180);
+  const maxHeight = useSharedValue(expanded ? 1000 : 0);
 
   const toggleExpanded = () => {
-    onToggle?.();
+    setExpanded(!expanded);
   };
+
+  useEffect(() => {
+    rotation.value = withTiming(expanded ? 0 : 180, { duration: 300 });
+    maxHeight.value = withTiming(expanded ? 1000 : 0, { duration: 300 });
+  }, [expanded, rotation, maxHeight]);
 
   const chevronStyle = useAnimatedStyle(() => {
     return {
@@ -77,52 +65,52 @@ export const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
         </Animated.View>
       </TouchableOpacity>
 
-      {shouldRender && (
+      {expanded && (
         <Animated.View style={[styles.contentWrapper, containerStyle]}>
           <View style={styles.chartContainer}>
-          {data.map((item) => {
-            const percentage = (item.value / maxAbsValue) * 100;
-            const isPositive = item.value >= 0;
-            const barWidthPercent = Math.abs(percentage) / 2;
+            {data.map((item) => {
+              const percentage = (item.value / maxAbsValue) * 100;
+              const isPositive = item.value >= 0;
+              const barWidthPercent = Math.abs(percentage) / 2;
 
-            return (
-              <View key={item.name} style={styles.barRow}>
-                <Text style={styles.barLabel}>{item.name}</Text>
+              return (
+                <View key={item.name} style={styles.barRow}>
+                  <Text style={styles.barLabel}>{item.name}</Text>
 
-                <View style={styles.barBackground}>
-                  <View style={styles.centerLine} />
+                  <View style={styles.barBackground}>
+                    <View style={styles.centerLine} />
 
-                  <View style={styles.barContainer}>
-                    {!isPositive && (
-                      <View style={{ width: `${barWidthPercent}%` }} />
-                    )}
+                    <View style={styles.barContainer}>
+                      {!isPositive && (
+                        <View style={{ width: `${barWidthPercent}%` }} />
+                      )}
 
-                    <View
-                      style={[
-                        styles.barFill,
-                        {
-                          width: `${barWidthPercent}%`,
-                          backgroundColor: isPositive ? "#4ae082" : "#ff4d4f",
-                          borderTopLeftRadius: isPositive ? 0 : 8,
-                          borderBottomLeftRadius: isPositive ? 0 : 8,
-                          borderTopRightRadius: isPositive ? 8 : 0,
-                          borderBottomRightRadius: isPositive ? 8 : 0,
-                        },
-                      ]}
-                    />
+                      <View
+                        style={[
+                          styles.barFill,
+                          {
+                            width: `${barWidthPercent}%`,
+                            backgroundColor: isPositive ? "#4ae082" : "#ff4d4f",
+                            borderTopLeftRadius: isPositive ? 0 : 8,
+                            borderBottomLeftRadius: isPositive ? 0 : 8,
+                            borderTopRightRadius: isPositive ? 8 : 0,
+                            borderBottomRightRadius: isPositive ? 8 : 0,
+                          },
+                        ]}
+                      />
 
-                    {isPositive && (
-                      <View style={{ width: `${barWidthPercent}%` }} />
-                    )}
+                      {isPositive && (
+                        <View style={{ width: `${barWidthPercent}%` }} />
+                      )}
+                    </View>
                   </View>
-                </View>
 
-                <Text style={styles.barValue}>
-                  {Math.round(item.value * 100)}%
-                </Text>
-              </View>
-            );
-          })}
+                  <Text style={styles.barValue}>
+                    {Math.round(item.value * 100)}%
+                  </Text>
+                </View>
+              );
+            })}
           </View>
         </Animated.View>
       )}

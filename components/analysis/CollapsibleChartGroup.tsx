@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { BarItem, HorizontalBarChart } from "./HorizontalBarChart";
 
@@ -17,17 +17,8 @@ interface CollapsibleChartGroupProps {
 
 export const CollapsibleChartGroup: React.FC<CollapsibleChartGroupProps> = ({
   charts,
-  defaultExpandedId,
   gap = 16,
 }) => {
-  const [expandedId, setExpandedId] = useState<string | undefined>(
-    defaultExpandedId
-  );
-
-  const handleToggle = (id: string) => {
-    setExpandedId((current) => (current === id ? undefined : id));
-  };
-
   return (
     <View style={[styles.container, { gap }]}>
       {charts.map((chart) => (
@@ -36,8 +27,6 @@ export const CollapsibleChartGroup: React.FC<CollapsibleChartGroupProps> = ({
           title={chart.title}
           data={chart.data}
           maxAbsValue={chart.maxAbsValue}
-          isExpanded={expandedId === chart.id}
-          onToggle={() => handleToggle(chart.id)}
         />
       ))}
     </View>
@@ -51,4 +40,3 @@ const styles = StyleSheet.create({
 });
 
 export default CollapsibleChartGroup;
-

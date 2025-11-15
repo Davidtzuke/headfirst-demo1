@@ -2,7 +2,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import React, { useState } from "react";
 import {
-  KeyboardAvoidingView,
   LayoutAnimation,
   Platform,
   ScrollView,
@@ -13,7 +12,6 @@ import {
   UIManager,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 // Enable LayoutAnimation on Android
 if (
@@ -469,41 +467,30 @@ export default function DiaryScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.root}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+    <View style={styles.root}>
+      <ScrollView
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
       >
-        {/* Header - Reserved space for logo */}
-        <View style={styles.header}>
-          {/* Empty space reserved for future logo */}
+        {/* Expandable Create Diary Card */}
+        <DiaryCreationCard
+          isExpanded={isExpanded}
+          onToggle={toggleExpanded}
+          onSave={handleSaveDiary}
+        />
+
+        {/* Saved Diaries List */}
+        <View style={styles.diariesList}>
+          <Text style={styles.diariesListTitle}>Your Diary Entries</Text>
+          {entries.map((entry) => (
+            <DiaryEntryCard key={entry.id} entry={entry} />
+          ))}
         </View>
 
-        <ScrollView
-          style={styles.scrollContainer}
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Expandable Create Diary Card */}
-          <DiaryCreationCard
-            isExpanded={isExpanded}
-            onToggle={toggleExpanded}
-            onSave={handleSaveDiary}
-          />
-
-          {/* Saved Diaries List */}
-          <View style={styles.diariesList}>
-            <Text style={styles.diariesListTitle}>Your Diary Entries</Text>
-            {entries.map((entry) => (
-              <DiaryEntryCard key={entry.id} entry={entry} />
-            ))}
-          </View>
-
-          <View style={{ height: 40 }} />
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+        <View style={{ height: 40 }} />
+      </ScrollView>
+    </View>
   );
 }
 
@@ -513,12 +500,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: "#020003",
-  },
-  header: {
-    height: 70,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
+    paddingTop: 16,
   },
   scrollContainer: {
     flex: 1,

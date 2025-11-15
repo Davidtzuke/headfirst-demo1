@@ -1,7 +1,8 @@
+import { ArchGradient } from "@/components/ArchGradient";
 import { Colors } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -22,7 +23,8 @@ export default function HomeScreen() {
       >
         <MaterialCommunityIcons name="menu" size={28} color={Colors.tint} />
       </TouchableOpacity>
-      <Text style={styles.title}>Welcome back, user.</Text>
+
+      <ArchGradient percentage={75} />
     </SafeAreaView>
   );
 }

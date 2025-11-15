@@ -33,6 +33,20 @@ export default function DrawerLayout() {
           ),
         }}
       />
+
+      <Drawer.Screen
+        name="analysis"
+        options={{
+          title: "Analysis",
+          drawerIcon: ({ color }: { color: string }) => (
+            <MaterialCommunityIcons
+              name="home-outline"
+              color={color}
+              size={24}
+            />
+          ),
+        }}
+      />
     </Drawer>
   );
 }

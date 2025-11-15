@@ -1,3 +1,4 @@
+import { Fonts } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { router, Slot, usePathname } from "expo-router";
@@ -30,6 +31,12 @@ const tabs = [
     title: "Forum",
     icon: "forum-outline",
   },
+  {
+    name: "diary",
+    route: "/(tabs)/diary",
+    title: "Diary",
+    icon: "book",
+  },
 ];
 
 const SIDEBAR_WIDTH = 280;
@@ -44,6 +51,7 @@ function SidebarMenu() {
   const getActiveIndex = () => {
     if (pathname.includes("/analysis")) return 1;
     if (pathname.includes("/forum")) return 2;
+    if (pathname.includes("/diary")) return 3;
     return 0;
   };
 
@@ -132,6 +140,10 @@ function SidebarMenu() {
                   paddingVertical: 20,
                   borderBottomWidth: 1,
                   borderBottomColor: "rgba(255, 255, 255, 0.1)",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 16,
                 }}
               >
                 <Text
@@ -139,10 +151,24 @@ function SidebarMenu() {
                     fontSize: 24,
                     fontWeight: "700",
                     color: "#FFFFFF",
+                    fontFamily: Fonts.headingBold,
                   }}
                 >
                   Menu
                 </Text>
+                <TouchableOpacity
+                  onPress={() => setIsOpen(false)}
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: 18,
+                    backgroundColor: "rgba(255, 255, 255, 0.08)",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <MaterialCommunityIcons name="close" size={22} color="#FFFFFF" />
+                </TouchableOpacity>
               </View>
 
               {/* Menu Items */}
@@ -201,6 +227,10 @@ function SidebarMenu() {
                 paddingVertical: 20,
                 borderBottomWidth: 1,
                 borderBottomColor: "rgba(255, 255, 255, 0.1)",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 16,
               }}
             >
               <Text
@@ -208,10 +238,24 @@ function SidebarMenu() {
                   fontSize: 24,
                   fontWeight: "700",
                   color: "#FFFFFF",
+                  fontFamily: Fonts.headingBold,
                 }}
               >
                 Menu
               </Text>
+              <TouchableOpacity
+                onPress={() => setIsOpen(false)}
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 18,
+                  backgroundColor: "rgba(255, 255, 255, 0.08)",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <MaterialCommunityIcons name="close" size={22} color="#FFFFFF" />
+              </TouchableOpacity>
             </View>
 
             {/* Menu Items */}
@@ -259,6 +303,7 @@ function SidebarMenu() {
 
       {/* Menu Button */}
       <TouchableOpacity
+        disabled={isOpen}
         style={{
           position: "absolute",
           top: insets.top + 10,
@@ -270,8 +315,9 @@ function SidebarMenu() {
           backgroundColor: "rgba(0, 0, 0, 0.5)",
           justifyContent: "center",
           alignItems: "center",
+          opacity: isOpen ? 0 : 1,
         }}
-        onPress={() => setIsOpen(!isOpen)}
+        onPress={() => setIsOpen(true)}
       >
         <MaterialCommunityIcons
           name={isOpen ? "close" : "menu"}

@@ -12,13 +12,27 @@ export default function AnalysisScreen() {
 
   return (
     <View style={styles.root}>
+      <View style={styles.header}>
+        <View style={{ width: 28 }} />
+
+        <View style={styles.headerTitleWrap}>
+          <Text style={styles.headerEyebrow}>Insights</Text>
+          <Text style={styles.headerTitle}>Analysis</Text>
+        </View>
+
+        <View style={styles.headerRightSpacer} />
+      </View>
+
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: tabBarHeight + 20 }}
+        contentContainerStyle={{
+          paddingBottom: tabBarHeight + 20,
+          paddingHorizontal: 20,
+        }}
       >
         <View
           style={{
-            paddingVertical: 32,
+            paddingVertical: 20,
           }}
         >
           <View
@@ -27,16 +41,6 @@ export default function AnalysisScreen() {
               paddingBottom: 32,
             }}
           >
-            <Text
-              style={{
-                fontSize: 40,
-                color: "#fff",
-                fontWeight: 800,
-              }}
-            >
-              Analysis
-            </Text>
-
             <Text
               style={{
                 fontSize: 20,
@@ -96,7 +100,35 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: Colors.background,
+    paddingTop: 20,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
     paddingHorizontal: 20,
+    paddingBottom: 12,
+  },
+  headerTitleWrap: {
+    flex: 1,
+    alignItems: "center",
+    gap: 2,
+  },
+  headerEyebrow: {
+    fontSize: 12,
+    letterSpacing: 1,
+    color: "rgba(255, 255, 255, 0.55)",
+    textTransform: "uppercase",
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: "600",
+    color: Colors.tint,
+    letterSpacing: 0.2,
+    textAlign: "center",
+  },
+  headerRightSpacer: {
+    width: 28,
   },
   menuButton: {},
   title: {

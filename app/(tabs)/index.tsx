@@ -132,6 +132,7 @@ export default function HomeScreen() {
       {/* Prediction percentage under the arch */}
       <View style={styles.percentageContainer}>
         <Text style={styles.percentageText}>{percentage}%</Text>
+        <Text style={styles.percentageLabel}>chance of migraine</Text>
       </View>
 
       {/* Scrollable analytics content */}
@@ -223,6 +224,13 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#FFFFFF",
     letterSpacing: -1,
+  },
+  percentageLabel: {
+    fontSize: 13,
+    fontWeight: "400",
+    color: "#9BA1A6",
+    marginTop: 4,
+    letterSpacing: 0.5,
   },
   scrollContent: {
     flex: 1,

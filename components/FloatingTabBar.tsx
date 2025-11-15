@@ -134,12 +134,14 @@ export function FloatingTabBar() {
   const handleMenuButton1 = () => {
     closeMenu();
     // Add your action here
+
     console.log("Menu button 1 pressed");
   };
 
   const handleMenuButton2 = () => {
     closeMenu();
     // Add your action here
+    handleNavigation("/(tabs)/chatbot")
     console.log("Menu button 2 pressed");
   };
 

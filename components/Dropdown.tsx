@@ -2,8 +2,8 @@ import { Colors } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
-  FlatList,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -50,11 +50,14 @@ const Dropdown: React.FC<Props> = ({ items, value, onChange, placeholder }) => {
 
       {open && (
         <View style={styles.dropdown}>
-          <FlatList
-            data={items}
-            keyExtractor={(item) => item.value}
-            renderItem={({ item }) => (
+          <ScrollView
+            nestedScrollEnabled={true}
+            showsVerticalScrollIndicator={false}
+            style={styles.dropdownScroll}
+          >
+            {items.map((item) => (
               <Pressable
+                key={item.value}
                 style={styles.item}
                 onPress={() => {
                   onChange(item.value);
@@ -63,8 +66,8 @@ const Dropdown: React.FC<Props> = ({ items, value, onChange, placeholder }) => {
               >
                 <Text style={styles.itemLabel}>{item.label}</Text>
               </Pressable>
-            )}
-          />
+            ))}
+          </ScrollView>
         </View>
       )}
     </View>
@@ -105,6 +108,9 @@ const styles = StyleSheet.create({
     borderColor: "#333",
     maxHeight: 220,
     overflow: "hidden",
+  },
+  dropdownScroll: {
+    maxHeight: 220,
   },
 
   item: {

@@ -358,6 +358,13 @@ export default function ForumScreen() {
   };
 
   const handleBackToFeed = () => {
+    // Clear form fields when canceling from create view
+    const wasCreating = view === "create";
+    if (wasCreating) {
+      setNewThreadTitle("");
+      setNewThreadContent("");
+      setNewThreadTags([]);
+    }
     setView("feed");
     setSelectedThread(null);
     setNewComment("");
@@ -642,16 +649,17 @@ export default function ForumScreen() {
           behavior={Platform.OS === "ios" ? "padding" : undefined}
         >
           {/* Header */}
-          <View style={[styles.createHeader, { paddingTop: insets.top + 12 }]}>
-            <TouchableOpacity onPress={handleBackToFeed}>
+          <View style={styles.createHeader}>
+            <TouchableOpacity onPress={handleBackToFeed} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
               <Text style={styles.cancelButton}>Cancel</Text>
             </TouchableOpacity>
 
-            <Text style={styles.createHeaderTitle}>New Thread</Text>
+            <Text style={styles.createHeaderTitle} pointerEvents="none">New Thread</Text>
 
             <TouchableOpacity
               onPress={handleCreateThread}
               disabled={!newThreadTitle.trim() || !newThreadContent.trim()}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             >
               <Text
                 style={[
@@ -1100,7 +1108,7 @@ const styles = StyleSheet.create({
   },
   createContent: {
     paddingHorizontal: 20,
-    paddingTop: 8,
+    paddingTop: 16,
   },
   createCard: {
     backgroundColor: "rgba(255, 255, 255, 0.03)",
@@ -1165,6 +1173,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 20,
+    paddingTop: 12,
     paddingBottom: 10,
   },
   cancelButton: {

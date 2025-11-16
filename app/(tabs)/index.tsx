@@ -1,6 +1,7 @@
 import { ArchGradient } from "@/components/ArchGradient";
 import { Colors, Fonts } from "@/constants/theme";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Animated, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Svg, { Defs, LinearGradient, Path, Stop } from "react-native-svg";
 
@@ -122,14 +123,34 @@ function BackgroundChart({
 }
 
 export default function HomeScreen() {
-  const percentage = 12;
+  const percentage = 16;
   const insets = useSafeAreaInsets();
   // Tab bar height: ~76px (60 minHeight + 16 padding) + bottom safe area
   const tabBarHeight = 76 + Math.max(insets.bottom, 20);
 
+  // Animation for percentage
+  const animatedValue = useRef(new Animated.Value(0)).current;
+  const [displayPercentage, setDisplayPercentage] = useState(0);
+
+  useEffect(() => {
+    const listener = animatedValue.addListener(({ value }) => {
+      setDisplayPercentage(Math.round(value));
+    });
+
+    Animated.timing(animatedValue, {
+      toValue: percentage,
+      duration: 1500,
+      useNativeDriver: false,
+    }).start();
+
+    return () => {
+      animatedValue.removeListener(listener);
+    };
+  }, [animatedValue, percentage]);
+
   return (
     <View style={styles.root}>
-      <ArchGradient percentage={percentage} />
+      <ArchGradient percentage={displayPercentage} />
 
       {/* Background chart - behind percentage (Revolut style) */}
       <View style={styles.backgroundChartContainer}>
@@ -138,7 +159,7 @@ export default function HomeScreen() {
 
       {/* Prediction percentage under the arch */}
       <View style={styles.percentageContainer}>
-        <Text style={styles.percentageText}>{percentage}%</Text>
+        <Text style={styles.percentageText}>{displayPercentage}%</Text>
         <Text style={styles.percentageLabel}>chance of migraine</Text>
       </View>
 
@@ -204,7 +225,6 @@ export default function HomeScreen() {
             </View>
           ))}
         </View>
-
       </ScrollView>
     </View>
   );

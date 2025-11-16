@@ -1,0 +1,192 @@
+{
+  "1": {
+    "2024-12-30T23:00:00": {
+      "label": 0.0,
+      "altitude": 0.0,
+      "geolocation_x": 0.44,
+      "geolocation_y": 0.54,
+      "atmospheric_pressure": 1.0,
+      "temperature": 0.39,
+      "screen_brightness": 0.34,
+      "night_light": 0.26,
+      "noise_level": 0.27,
+      "travel_trajectory_distance": 0.65,
+      "time_spent_travelling": 0.71,
+      "sleep_time": 0.54,
+      "time_walking": 0.36,
+      "time_stationary": 0.57,
+      "time_in_vehicle": 0.71
+    }
+  },
+  "2": {
+    "2024-12-30T23:00:00": {
+      "label": 0.0,
+      "altitude": 0.71,
+      "geolocation_x": 0.3,
+      "geolocation_y": 0.25,
+      "atmospheric_pressure": 0.32,
+      "temperature": 0.38,
+      "screen_brightness": 0.37,
+      "night_light": 0.21,
+      "noise_level": 0.31,
+      "travel_trajectory_distance": 0.58,
+      "time_spent_travelling": 0.62,
+      "sleep_time": 0.49,
+      "time_walking": 0.34,
+      "time_stationary": 0.29,
+      "time_in_vehicle": 0.62
+    }
+  },
+  "3": {
+    "2024-12-30T23:00:00": {
+      "label": 0.0,
+      "altitude": 0.78,
+      "geolocation_x": 0.86,
+      "geolocation_y": 0.24,
+      "atmospheric_pressure": 0.25,
+      "temperature": 0.38,
+      "screen_brightness": 0.34,
+      "night_light": 0.24,
+      "noise_level": 0.27,
+      "travel_trajectory_distance": 0.44,
+      "time_spent_travelling": 0.5,
+      "sleep_time": 0.62,
+      "time_walking": 0.5,
+      "time_stationary": 0.0,
+      "time_in_vehicle": 0.5
+    }
+  },
+  "4": {
+    "2024-12-30T23:00:00": {
+      "label": 0.0,
+      "altitude": 0.46,
+      "geolocation_x": 0.98,
+      "geolocation_y": 0.55,
+      "atmospheric_pressure": 0.56,
+      "temperature": 0.38,
+      "screen_brightness": 0.34,
+      "night_light": 0.21,
+      "noise_level": 0.25,
+      "travel_trajectory_distance": 0.68,
+      "time_spent_travelling": 0.81,
+      "sleep_time": 0.58,
+      "time_walking": 0.19,
+      "time_stationary": 0.0,
+      "time_in_vehicle": 0.81
+    }
+  },
+  "5": {
+    "2024-12-30T23:00:00": {
+      "label": 0.0,
+      "altitude": 0.11,
+      "geolocation_x": 0.63,
+      "geolocation_y": 0.44,
+      "atmospheric_pressure": 0.93,
+      "temperature": 0.37,
+      "screen_brightness": 0.35,
+      "night_light": 0.24,
+      "noise_level": 0.35,
+      "travel_trajectory_distance": 0.7,
+      "time_spent_travelling": 0.72,
+      "sleep_time": 0.51,
+      "time_walking": 0.28,
+      "time_stationary": 0.0,
+      "time_in_vehicle": 0.72
+    }
+  },
+  "6": {
+    "2024-12-30T23:00:00": {
+      "label": 0.0,
+      "altitude": 0.0,
+      "geolocation_x": 0.08,
+      "geolocation_y": 0.07,
+      "atmospheric_pressure": 1.0,
+      "temperature": 0.36,
+      "screen_brightness": 0.32,
+      "night_light": 0.19,
+      "noise_level": 0.3,
+      "travel_trajectory_distance": 0.34,
+      "time_spent_travelling": 0.36,
+      "sleep_time": 0.67,
+      "time_walking": 0.64,
+      "time_stationary": 0.0,
+      "time_in_vehicle": 0.36
+    }
+  },
+  "7": {
+    "2024-12-30T23:00:00": {
+      "label": 0.0,
+      "altitude": 0.0,
+      "geolocation_x": 0.18,
+      "geolocation_y": 0.4,
+      "atmospheric_pressure": 1.0,
+      "temperature": 0.4,
+      "screen_brightness": 0.34,
+      "night_light": 0.23,
+      "noise_level": 0.21,
+      "travel_trajectory_distance": 0.55,
+      "time_spent_travelling": 0.65,
+      "sleep_time": 0.57,
+      "time_walking": 0.34,
+      "time_stationary": 0.0,
+      "time_in_vehicle": 0.65
+    }
+  },
+  "8": {
+    "2024-12-30T23:00:00": {
+      "label": 0.0,
+      "altitude": 0.0,
+      "geolocation_x": 0.01,
+      "geolocation_y": 0.13,
+      "atmospheric_pressure": 1.0,
+      "temperature": 0.4,
+      "screen_brightness": 0.29,
+      "night_light": 0.18,
+      "noise_level": 0.24,
+      "travel_trajectory_distance": 0.45,
+      "time_spent_travelling": 0.52,
+      "sleep_time": 0.44,
+      "time_walking": 0.48,
+      "time_stationary": 0.0,
+      "time_in_vehicle": 0.52
+    }
+  },
+  "9": {
+    "2024-12-30T23:00:00": {
+      "label": 0.0,
+      "altitude": 0.32,
+      "geolocation_x": 0.96,
+      "geolocation_y": 0.98,
+      "atmospheric_pressure": 0.71,
+      "temperature": 0.38,
+      "screen_brightness": 0.34,
+      "night_light": 0.29,
+      "noise_level": 0.35,
+      "travel_trajectory_distance": 0.24,
+      "time_spent_travelling": 0.53,
+      "sleep_time": 0.83,
+      "time_walking": 0.58,
+      "time_stationary": 0.02,
+      "time_in_vehicle": 0.45
+    }
+  },
+  "10": {
+    "2024-12-30T23:00:00": {
+      "label": 0.0,
+      "altitude": 0.05,
+      "geolocation_x": 0.47,
+      "geolocation_y": 0.57,
+      "atmospheric_pressure": 0.99,
+      "temperature": 0.38,
+      "screen_brightness": 0.39,
+      "night_light": 0.24,
+      "noise_level": 0.34,
+      "travel_trajectory_distance": 0.65,
+      "time_spent_travelling": 0.55,
+      "sleep_time": 0.52,
+      "time_walking": 0.43,
+      "time_stationary": 0.14,
+      "time_in_vehicle": 0.55
+    }
+  }
+}

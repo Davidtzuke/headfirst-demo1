@@ -250,7 +250,7 @@ export function FloatingTabBar() {
         ]}
       >
         <View style={styles.tabBarContainer}>
-          {Platform.OS === "ios" ? (
+          {Platform.OS === "ios" && Platform.OS !== "web" ? (
             <BlurView
               intensity={80}
               style={[styles.blurContainer, { width: tabBarWidth }]}
@@ -291,7 +291,7 @@ export function FloatingTabBar() {
           <View style={styles.plusButtonContainer}>
             {/* Menu */}
             <Animated.View style={[styles.menuContainer, menuAnimatedStyle]}>
-              {Platform.OS === "ios" ? (
+              {Platform.OS === "ios" && Platform.OS !== "web" ? (
                 <BlurView intensity={80} style={styles.menuBlur} tint="dark">
                   <View style={styles.menuStack}>
                     <MenuButton
@@ -308,7 +308,7 @@ export function FloatingTabBar() {
                 <View style={[styles.menuBlur, styles.androidContainer]}>
                   <View style={styles.menuStack}>
                     <MenuButton
-                      icon="bell-outline"
+                      icon="notebook-outline"
                       onPress={handleMenuButton1}
                     />
                     <MenuButton
@@ -321,7 +321,7 @@ export function FloatingTabBar() {
             </Animated.View>
 
             {/* Plus Button */}
-            {Platform.OS === "ios" ? (
+            {Platform.OS === "ios" && Platform.OS !== "web" ? (
               <BlurView
                 intensity={80}
                 style={styles.plusButtonBlur}
@@ -371,7 +371,11 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   androidContainer: {
-    backgroundColor: "rgba(2, 0, 3, 0.95)",
+    backgroundColor: "rgba(2, 0, 3, 0.85)",
+    ...(Platform.OS === "web" && {
+      backdropFilter: "blur(20px)",
+      WebkitBackdropFilter: "blur(20px)",
+    }),
   },
   tabBar: {
     flexDirection: "row",

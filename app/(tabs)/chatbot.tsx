@@ -64,12 +64,14 @@ export default function ChatbotScreen() {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
   const chatBottomPadding = inputHeight + EXTRA_SCROLL_PADDING;
-  // Tab bar height (~76px) + container padding (~20px) + safe area
-  const tabBarHeight = 76 + Math.max(insets.bottom, 20);
+  // Tab bar height: web uses larger size (80px button + padding + extra clearance), mobile uses 76px
+  const tabBarHeight = Platform.OS === "web" ? 140 : 76 + Math.max(insets.bottom, 20);
   const composerPaddingBottom = isKeyboardVisible ? KEYBOARD_GAP : tabBarHeight;
 
-  // Auto-scroll when keyboard shows
+  // Auto-scroll when keyboard shows (mobile only)
   useEffect(() => {
+    if (Platform.OS === "web") return;
+
     const showEvent =
       Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
     const hideEvent =
@@ -166,8 +168,9 @@ export default function ChatbotScreen() {
     <SafeAreaView style={styles.rootFull} edges={["left", "right"]}>
       <KeyboardAvoidingView
         style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Platform.OS === "ios" ? "padding" : Platform.OS === "web" ? undefined : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? insets.top + 110 : 0}
+        enabled={Platform.OS !== "web"}
       >
         {/* Page Header */}
         <View style={styles.pageHeader}>
@@ -257,10 +260,16 @@ const styles = StyleSheet.create({
   rootFull: {
     flex: 1,
     backgroundColor: Colors.background,
+    ...(Platform.OS === "web" && {
+      overflow: "hidden",
+    }),
   },
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    ...(Platform.OS === "web" && {
+      position: "relative",
+    }),
   },
   pageHeader: {
     flexDirection: "row",
@@ -369,6 +378,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     maxHeight: 96,
     textAlignVertical: "top",
+    ...(Platform.OS === "web" && {
+      outlineStyle: "none",
+    }),
   },
   sendButton: {
     width: 44,
@@ -377,6 +389,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
+    ...(Platform.OS === "web" && {
+      cursor: "pointer",
+    }),
   },
   sendButtonDisabled: {
     backgroundColor: "rgba(255, 255, 255, 0.1)",

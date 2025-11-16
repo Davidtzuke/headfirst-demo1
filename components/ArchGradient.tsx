@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { View, ViewStyle } from "react-native";
+import React, { useMemo, useRef } from "react";
+import { Platform, View, ViewStyle } from "react-native";
 import Svg, {
   ClipPath,
   Defs,
@@ -18,6 +18,8 @@ interface ArchGradientProps {
   style?: ViewStyle;
 }
 
+let instanceCounter = 0;
+
 const COLOR_GREEN: RGB = { r: 74, g: 224, b: 130 }; // #4AE082
 const COLOR_RED: RGB = { r: 255, g: 0, b: 0 }; // #FF0000
 
@@ -35,6 +37,10 @@ export const ArchGradient: React.FC<ArchGradientProps> = ({
   percentage = 50,
   style,
 }) => {
+  const instanceId = useRef(++instanceCounter).current;
+  const gradientId = `archGradientFill-${instanceId}`;
+  const clipId = `archClip-${instanceId}`;
+
   const eased = useMemo(
     () => Math.pow(clamp(percentage / 100, 0, 1), 1.2),
     [percentage]
@@ -50,10 +56,12 @@ export const ArchGradient: React.FC<ArchGradientProps> = ({
       style={[
         {
           position: "absolute",
+          top: 0,
           left: 0,
           right: 0,
           height: 250,
           overflow: "hidden",
+          zIndex: 0,
         },
         style,
       ]}
@@ -63,10 +71,11 @@ export const ArchGradient: React.FC<ArchGradientProps> = ({
         height="100%"
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
+        style={Platform.OS === "web" ? { display: "block" } : undefined}
       >
         <Defs>
           <LinearGradient
-            id="archGradientFill"
+            id={gradientId}
             x1="0%"
             y1="0%"
             x2="0%"
@@ -78,7 +87,7 @@ export const ArchGradient: React.FC<ArchGradientProps> = ({
             <Stop offset="100%" stopColor="#00012B" />
           </LinearGradient>
 
-          <ClipPath id="archClip">
+          <ClipPath id={clipId}>
             <Path d="M 0 0 L 100 0 L 100 100 C 75 60, 25 60, 0 100 Z" />
           </ClipPath>
         </Defs>
@@ -86,8 +95,8 @@ export const ArchGradient: React.FC<ArchGradientProps> = ({
         <Rect
           width="100"
           height="100"
-          fill="url(#archGradientFill)"
-          clipPath="url(#archClip)"
+          fill={`url(#${gradientId})`}
+          clipPath={`url(#${clipId})`}
         />
       </Svg>
     </View>

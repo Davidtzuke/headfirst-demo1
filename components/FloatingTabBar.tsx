@@ -39,8 +39,9 @@ export function FloatingTabBar() {
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
   const screenWidth = Dimensions.get("window").width;
-  const iconButtonWidth = 60; // Width of icon button container
-  const gap = 10; // Gap between tab bar and icon button
+  const isWeb = Platform.OS === "web";
+  const iconButtonWidth = isWeb ? 80 : 60; // Width of icon button container
+  const gap = isWeb ? 16 : 10; // Gap between tab bar and icon button
   const tabBarWidth = screenWidth - 40 - iconButtonWidth - gap; // Account for padding, icon button, and gap
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -97,7 +98,7 @@ export function FloatingTabBar() {
         <Animated.View style={[styles.tabButtonContent, animatedStyle]}>
           <MaterialCommunityIcons
             name={tab.icon as any}
-            size={24}
+            size={Platform.OS === "web" ? 32 : 24}
             color={isActive ? Colors.primary : Colors.icon}
           />
           {isActive && <View style={styles.activeIndicator} />}
@@ -171,7 +172,7 @@ export function FloatingTabBar() {
         style={styles.plusButton}
       >
         <Animated.View style={[styles.plusButtonContent, buttonAnimatedStyle]}>
-          <MaterialCommunityIcons name="plus" size={24} color={Colors.icon} />
+          <MaterialCommunityIcons name="plus" size={Platform.OS === "web" ? 32 : 24} color={Colors.icon} />
         </Animated.View>
       </Pressable>
     );
@@ -210,7 +211,7 @@ export function FloatingTabBar() {
         <Animated.View style={[styles.menuButtonContent, animatedStyle]}>
           <MaterialCommunityIcons
             name={icon as any}
-            size={24}
+            size={Platform.OS === "web" ? 32 : 24}
             color={Colors.icon}
           />
         </Animated.View>
@@ -381,22 +382,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    minHeight: 60,
+    paddingHorizontal: Platform.OS === "web" ? 24 : 16,
+    paddingVertical: Platform.OS === "web" ? 12 : 8,
+    minHeight: Platform.OS === "web" ? 76 : 60,
   },
   tabButton: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 8,
+    paddingVertical: Platform.OS === "web" ? 12 : 8,
   },
   tabButtonContent: {
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
-    width: 40,
-    height: 40,
+    width: Platform.OS === "web" ? 52 : 40,
+    height: Platform.OS === "web" ? 52 : 40,
   },
   activeIndicator: {
     position: "absolute",
@@ -433,24 +434,24 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
-    width: 64,
-    height: 64,
+    width: Platform.OS === "web" ? 80 : 64,
+    height: Platform.OS === "web" ? 80 : 64,
   },
   plusButton: {
-    width: 64,
-    height: 64,
+    width: Platform.OS === "web" ? 80 : 64,
+    height: Platform.OS === "web" ? 80 : 64,
     alignItems: "center",
     justifyContent: "center",
   },
   plusButtonContent: {
     alignItems: "center",
     justifyContent: "center",
-    width: 40,
-    height: 40,
+    width: Platform.OS === "web" ? 52 : 40,
+    height: Platform.OS === "web" ? 52 : 40,
   },
   menuContainer: {
     position: "absolute",
-    bottom: 78,
+    bottom: Platform.OS === "web" ? 94 : 78,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -483,7 +484,7 @@ const styles = StyleSheet.create({
   menuButtonContent: {
     alignItems: "center",
     justifyContent: "center",
-    width: 48,
-    height: 48,
+    width: Platform.OS === "web" ? 60 : 48,
+    height: Platform.OS === "web" ? 60 : 48,
   },
 });
